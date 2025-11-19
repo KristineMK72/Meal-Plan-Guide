@@ -1,3 +1,5 @@
+// /pages/index.js
+
 import Image from "next/image";
 
 export default function Home() {
@@ -19,7 +21,7 @@ export default function Home() {
 
       {/* Breakfast */}
       <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-        <Image src="/icons/breakfast.png" width={64} height={64} />
+        <Image src="/icons/breakfast.png" width={64} height={64} alt="Breakfast Icon"/>
         <h3>Breakfast Ideas</h3>
       </div>
       <ul>
@@ -30,7 +32,7 @@ export default function Home() {
 
       {/* Lunch */}
       <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-        <Image src="/icons/lunch.png" width={64} height={64} />
+        <Image src="/icons/lunch.png" width={64} height={64} alt="Lunch Icon"/>
         <h3>Lunch Ideas</h3>
       </div>
       <ul>
@@ -41,7 +43,7 @@ export default function Home() {
 
       {/* Dinner */}
       <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-        <Image src="/icons/dinner.png" width={64} height={64} />
+        <Image src="/icons/dinner.png" width={64} height={64} alt="Dinner Icon"/>
         <h3>Dinner Ideas</h3>
       </div>
       <ul>
@@ -50,18 +52,10 @@ export default function Home() {
         <li>Chicken stir-fry (no rice)</li>
       </ul>
 
-      <button
-        style={{
-          padding: "1rem 2rem",
-          background: "#000",
-          color: "#fff",
-          borderRadius: "8px",
-          marginTop: "2rem"
-        }}
-        onClick={() => window.location.href = "/api/mealplan-pdf"}
-      >
-        Download Full PDF Guide
-      </button>
+      {/* This is where the download button was. 
+        It has been removed to eliminate the PDF feature.
+      */}
+      
     </div>
   );
 }
