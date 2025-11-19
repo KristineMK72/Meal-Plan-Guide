@@ -1,6 +1,12 @@
 // /pages/index.js
-
+// /pages/index.js
 import Image from "next/image";
+
+// NOTE: Replace these URLs with your actual image links!
+const BANNER_URL = "https://i.imgur.com/your-banner-image.png";
+const BREAKFAST_ICON_URL = "https://i.imgur.com/breakfast-icon.png";
+const LUNCH_ICON_URL = "https://i.imgur.com/lunch-icon.png";
+const DINNER_ICON_URL = "https://i.imgur.com/dinner-icon.png";
 
 export default function Home() {
   return (
@@ -10,10 +16,13 @@ export default function Home() {
       </h1>
 
       <Image 
-        src="/banner.png" 
+        src={BANNER_URL} 
         alt="Meal Plan Banner"
         width={900} 
         height={250}
+        // Next.js requires configuration for external images. 
+        // You'll need to add the image domain (e.g., 'i.imgur.com') to your next.config.js
+        unoptimized={true} 
         style={{ borderRadius: "12px", margin: "2rem 0" }}
       />
 
@@ -21,7 +30,7 @@ export default function Home() {
 
       {/* Breakfast */}
       <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-        <Image src="/icons/breakfast.png" width={64} height={64} alt="Breakfast Icon"/>
+        <Image src={BREAKFAST_ICON_URL} width={64} height={64} alt="Breakfast Icon" unoptimized={true}/>
         <h3>Breakfast Ideas</h3>
       </div>
       <ul>
@@ -32,7 +41,7 @@ export default function Home() {
 
       {/* Lunch */}
       <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-        <Image src="/icons/lunch.png" width={64} height={64} alt="Lunch Icon"/>
+        <Image src={LUNCH_ICON_URL} width={64} height={64} alt="Lunch Icon" unoptimized={true}/>
         <h3>Lunch Ideas</h3>
       </div>
       <ul>
@@ -43,7 +52,7 @@ export default function Home() {
 
       {/* Dinner */}
       <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-        <Image src="/icons/dinner.png" width={64} height={64} alt="Dinner Icon"/>
+        <Image src={DINNER_ICON_URL} width={64} height={64} alt="Dinner Icon" unoptimized={true}/>
         <h3>Dinner Ideas</h3>
       </div>
       <ul>
@@ -51,11 +60,8 @@ export default function Home() {
         <li>Steak + asparagus</li>
         <li>Chicken stir-fry (no rice)</li>
       </ul>
-
-      {/* This is where the download button was. 
-        It has been removed to eliminate the PDF feature.
-      */}
-      
     </div>
   );
 }
+
+
