@@ -10,7 +10,7 @@ export default function Home() {
       <Image 
         src="/banner.png" 
         alt="Meal Plan Banner"
-        width={900}
+        width={900} 
         height={250}
         style={{ borderRadius: "12px", margin: "2rem 0" }}
       />
