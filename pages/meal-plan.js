@@ -1,10 +1,11 @@
 // /pages/meal-plan.js
+// /pages/meal-plan.js
 import React from 'react';
 
-// ICON URLS: These are now pointing to externally hosted images
-const BREAKFAST_ICON_URL = "http://googleusercontent.com/image_collection/image_retrieval/18424797109077580623_0";
-const LUNCH_ICON_URL = "http://googleusercontent.com/image_collection/image_retrieval/14412728480063907593_0";
-const DINNER_ICON_URL = "http://googleusercontent.com/image_collection/image_retrieval/14652479439516078240_0";
+// ICON URLS: Switched to reliable, publicly hosted placeholders
+const BREAKFAST_ICON_URL = "https://img.icons8.com/material-outlined/32/breakfast.png";
+const LUNCH_ICON_URL = "https://img.icons8.com/material-outlined/32/lunch.png";
+const DINNER_ICON_URL = "https://img.icons8.com/material-outlined/32/dinner.png";
 
 export default function MealPlan() {
     const days = [
