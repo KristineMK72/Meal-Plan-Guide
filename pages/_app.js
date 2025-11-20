@@ -1,8 +1,11 @@
-// /pages/_app.js 
+// /pages/_app.js (UPDATE THIS FILE)
 import React from 'react';
 import Navbar from '../components/Navbar';
-import Footer from '../components/Footer'; // <-- IMPORT FOOTER
+import Footer from '../components/Footer';
+import '../styles/global.css'; // <-- ADD THIS IMPORT
 
+function MyApp({ Component, pageProps }) {
+// ... rest of the file is unchanged
 function MyApp({ Component, pageProps }) {
   return (
     <>
