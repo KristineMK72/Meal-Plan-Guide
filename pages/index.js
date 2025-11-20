@@ -13,9 +13,8 @@ export default function Home() {
                 Discover the science-backed benefits of shifting your diet toward protein and healthy fats.
             </p>
 
-            {/* Benefit Buttons */}
-            <div className="center-on-mobile" style={{ display: 'flex', justifyContent: 'center', gap: '2rem', marginBottom: '3rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem', marginBottom: '3rem' }}>
+            {/* Benefit Buttons - Uses the responsive class "center-on-mobile" */}
+            <div className="center-on-mobile" style={{ display: 'flex', justifyContent: 'center', gap: '2rem', marginBottom: '3rem' }}> 
                 <Link href="/meal-plan" style={{ padding: '0.75rem 1.5rem', background: '#1845AD', color: 'white', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold' }}>
                     View 7-Day Meal Plan 🍽️
                 </Link>
@@ -47,11 +46,20 @@ export default function Home() {
             {/* START OF NEW SECTION: Diet for Mood and Cognition */}
             <h2 style={{ color: "#333", marginTop: "3rem" }}>Diet for Mood and Cognition</h2>
             <p>
-                The food you eat affects your mood through the **Gut-Brain Axis**. High-quality diets, like the **MIND Diet**, provide the essential nutrients (especially Omega-3s and antioxidants) needed to support neurotransmitter production and reduce chronic inflammation in the brain. 
-
-
-
+                The food you eat affects your mood through the **Gut-Brain Axis**. High-quality diets, like the **MIND Diet**, provide the essential nutrients (especially Omega-3s and antioxidants) needed to support neurotransmitter production and reduce chronic inflammation in the brain.
             </p>
+
+            {/* Image reference for the Mind Diet section */}
+            <img 
+              src="/gut-brain-axis.png" 
+              alt="Diagram illustrating the Gut-Brain Axis" 
+              style={{ maxWidth: '80%', height: 'auto', margin: '1.5rem auto', display: 'block', borderRadius: '8px' }}
+            />
+            
+
+[Image of Gut-Brain Axis diagram]
+
+
             <Link 
                 href="/mind-diet" 
                 style={{ 
@@ -69,6 +77,16 @@ export default function Home() {
                 Explore the Anti-Inflammatory MIND Diet 🧠
             </Link>
             {/* END OF NEW SECTION */}
+
+            <hr />
+
+            <h2 style={{ color: "#333" }}>Sources and Further Reading</h2>
+            <blockquote style={{ borderLeft: '4px solid #ccc', paddingLeft: '1rem', margin: '1rem 0', fontStyle: 'italic' }}>
+                {/* Source 1 is now text-only, removing broken links */}
+                <p>— **Source 1 (Metabolism):** Dietary protein intake is associated with reduced body fat and improved satiety. (e.g., *Schoeller, D.A., and A.M. Buchholz, 2005*)</p>
+                <p>— **Source 2 (Weight Management):** Low-carbohydrate diets are effective for weight loss and cardiovascular risk factors, at least in the short term. (e.g., *Volek, J.S., and R.D. Feinman, 2008*)</p>
+                <p>— **Source 3 (Appetite Control):** The role of protein in energy balance and body weight regulation. (e.g., *Halton, T.L., and F.B. Hu, 2004*)</p>
+            </blockquote>
 
             <p style={{ fontSize: '0.9rem', color: '#888' }}>
                 *Note: Always consult a healthcare professional or registered dietitian before starting any new diet plan.*
