@@ -1,19 +1,17 @@
-// /pages/_app.js (UPDATE THIS FILE)
+// /pages/_app.js (FIXED VERSION)
 import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import '../styles/global.css'; // <-- ADD THIS IMPORT
+import '../styles/global.css'; 
 
-function MyApp({ Component, pageProps }) {
-// ... rest of the file is unchanged
 function MyApp({ Component, pageProps }) {
   return (
     <>
       <Navbar />
       <Component {...pageProps} />
-      <Footer /> {/* <-- ADD FOOTER HERE */}
+      <Footer />
     </>
   );
 }
 
-export default MyApp;
+export default MyApp; // 
