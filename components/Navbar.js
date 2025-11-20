@@ -1,9 +1,9 @@
-// /components/Navbar.js (UPDATE THIS FILE)
+// /components/Navbar.js
 import Link from 'next/link';
 
 export default function Navbar() {
   return (
-    <nav className="navbar-container" style={{ // <-- Add class name here
+    <nav className="navbar-container" style={{
       background: '#1845AD',
       padding: '1rem 2rem',
       display: 'flex',
@@ -19,7 +19,9 @@ export default function Navbar() {
       }}>
         Fuel & Flourish 🌱
       </Link>
-      <div className="nav-links" style={{ display: 'flex', gap: '2rem' }}> // <-- Add class name here
+      
+      {/* This div is now clean and uses the responsive class */}
+      <div className="nav-links" style={{ display: 'flex', gap: '2rem' }}>
         <Link href="/" style={navLinkStyle}>Home</Link>
         <Link href="/meal-plan" style={navLinkStyle}>Meal Plan</Link>
         <Link href="/shoplist" style={navLinkStyle}>Shopping List</Link>
