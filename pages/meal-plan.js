@@ -1,8 +1,8 @@
 // /pages/meal-plan.js
-// /pages/meal-plan.js
 import React from 'react';
+import Link from 'next/link'; 
 
-// ICON URLS: Switched to reliable, publicly hosted placeholders
+// ICON URLS: These are pointing to externally hosted images
 const BREAKFAST_ICON_URL = "https://img.icons8.com/material-outlined/32/breakfast.png";
 const LUNCH_ICON_URL = "https://img.icons8.com/material-outlined/32/lunch.png";
 const DINNER_ICON_URL = "https://img.icons8.com/material-outlined/32/dinner.png";
@@ -53,33 +53,7 @@ export default function MealPlan() {
         },
     ];
 
-    const shoppingList = {
-        Proteins: [
-            "Chicken breasts/thighs",
-            "Salmon & Cod",
-            "Lean ground beef/turkey",
-            "Shrimp",
-            "Eggs, Canned tuna",
-            "Cottage cheese, Greek yogurt",
-            "Protein powder",
-        ],
-        Vegetables: [
-            "Asparagus & Broccoli",
-            "Spinach & Romaine",
-            "Green beans",
-            "Brussels sprouts",
-            "Zucchini & Mushrooms",
-            "Avocados",
-        ],
-        Fruits: ["Mixed Berries (low-carb)"],
-        Pantry: [
-            "Olive oil, Mayo",
-            "Chia seeds",
-            "Almonds & Walnuts",
-            "Low-carb salsa/marinara",
-            "Seasonings",
-        ],
-    };
+    // NOTE: The shoppingList data object has been removed from this file.
 
     return (
         <main style={{ padding: "2rem", maxWidth: "900px", margin: "0 auto" }}>
@@ -130,50 +104,24 @@ export default function MealPlan() {
                 ))}
             </div>
 
-            {/* Shopping List Banner */}
-            <h1
-                style={{
-                    textAlign: "center",
-                    marginTop: "3rem",
-                    background: "#333",
-                    color: "white",
-                    padding: "1rem",
-                    borderRadius: "10px",
-                    fontSize: "1.6rem",
-                }}
-            >
-                🛒 Weekly Shopping List
-            </h1>
-
-            {/* Shopping List Grid */}
-            <div
-                style={{
-                    display: "grid",
-                    gap: "1.5rem",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                    marginTop: "1.5rem",
-                }}
-            >
-                {Object.entries(shoppingList).map(([category, items], idx) => (
-                    <div
-                        key={idx}
-                        style={{
-                            background: "#f0f0f0",
-                            padding: "1rem",
-                            borderRadius: "10px",
-                            boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
-                        }}
-                    >
-                        <h3 style={{ color: "#333", borderBottom: "2px solid #ccc", paddingBottom: "0.5rem" }}>{category}</h3>
-                        <ul style={{ listStyle: "none", paddingLeft: "0", marginTop: "0.5rem" }}>
-                            {items.map((item, i) => (
-                                <li key={i} style={{ marginBottom: "0.3rem" }}>
-                                    <span style={{ color: "#1845AD" }}>•</span> {item}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                ))}
+            {/* Dynamic Link to Shopping List (New Feature) */}
+            <div style={{ textAlign: "center", marginTop: "3rem" }}>
+                <Link 
+                    href="/shoplist"
+                    style={{
+                        padding: "1rem 2rem",
+                        background: "#00b386", // Green color for Shopping
+                        color: "white",
+                        border: "none",
+                        borderRadius: "10px",
+                        cursor: "pointer",
+                        fontSize: "1.2rem",
+                        textDecoration: "none", // Remove underline from link
+                        display: "inline-block"
+                    }}
+                >
+                    View Full Weekly Shopping List 🛒
+                </Link>
             </div>
         </main>
     );
