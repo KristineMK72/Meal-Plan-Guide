@@ -1,9 +1,9 @@
-// /components/Navbar.js
+// /components/Navbar.js (UPDATE THIS FILE)
 import Link from 'next/link';
 
 export default function Navbar() {
   return (
-    <nav style={{
+    <nav className="navbar-container" style={{ // <-- Add class name here
       background: '#1845AD',
       padding: '1rem 2rem',
       display: 'flex',
@@ -19,12 +19,12 @@ export default function Navbar() {
       }}>
         Fuel & Flourish 🌱
       </Link>
-      <div style={{ display: 'flex', gap: '2rem' }}>
+      <div className="nav-links" style={{ display: 'flex', gap: '2rem' }}> // <-- Add class name here
         <Link href="/" style={navLinkStyle}>Home</Link>
         <Link href="/meal-plan" style={navLinkStyle}>Meal Plan</Link>
         <Link href="/shoplist" style={navLinkStyle}>Shopping List</Link>
         <Link href="/mind-diet" style={navLinkStyle}>Mind Diet</Link>
-        <Link href="/sustainability" style={navLinkStyle}>Sustainability</Link> {/* New Page Link */}
+        <Link href="/sustainability" style={navLinkStyle}>Sustainability</Link>
       </div>
     </nav>
   );
