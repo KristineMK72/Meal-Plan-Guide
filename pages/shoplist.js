@@ -4,7 +4,80 @@ import React from 'react';
 // Shopping List Data (High-Protein/Low-Carb)
 const highProteinList = {
     Proteins: [
+        "Chicken breasts/thighs", "Salmon & Cod", "Lean ground beef/turkey", // /pages/shoplist.js
+import React from 'react';
+
+// Shopping List Data (High-Protein/Low-Carb)
+const highProteinList = {
+    Proteins: [
         "Chicken breasts/thighs", "Salmon & Cod", "Lean ground beef/turkey", 
+        "Shrimp", "Eggs, Canned tuna", "Cottage cheese, Greek yogurt", "Protein powder",
+    ],
+    Vegetables: [
+        "Asparagus & Broccoli", "Spinach & Romaine", "Green beans", 
+        "Brussels sprouts", "Zucchini & Mushrooms", "Avocados",
+    ],
+    Fruits: ["Mixed Berries (low-carb)"],
+    Pantry: [
+        "Olive oil, Mayo", "Chia seeds", "Almonds & Walnuts", 
+        "Low-carb salsa/marinara", "Seasonings",
+    ],
+};
+
+// NEW Shopping List Data (MIND/Anti-Inflammatory)
+const mindDietList = {
+    "Brain Boosters": [
+        "Oily Fish (Salmon, Tuna, Mackerel)", "Blueberries & Strawberries",
+        "Walnuts, Pecans, Almonds", "Dark Chocolate (70%+ cacao)",
+    ],
+    "Greens & Oils": [
+        "Kale, Spinach, Collard Greens", "Broccoli, Cauliflower", 
+        "Extra Virgin Olive Oil", "Avocado Oil",
+    ],
+    "Grains & Pulses": [
+        "Oatmeal, Whole Wheat Bread", "Brown Rice, Quinoa", "Lentils, Beans",
+    ],
+    "Spices & Herbs": [
+        "Turmeric, Ginger (Anti-inflammatory)", "Rosemary, Oregano",
+    ],
+};
+
+
+export default function ShopList() {
+    return (
+        <main style={{ padding: "2rem", maxWidth: "1000px", margin: "0 auto" }}>
+
+            <h1
+                style={{
+                    textAlign: "center",
+                    background: "#1845AD",
+                    color: "white",
+                    padding: "1.2rem",
+                    borderRadius: "12px",
+                    fontSize: "1.8rem",
+                    marginBottom: "2rem",
+                }}
+            >
+                🛒 Your Weekly Shopping Lists
+            </h1>
+
+            {/* High-Protein/Low-Carb List */}
+            <h2 style={{ color: "#1845AD", textAlign: "center", borderBottom: '2px solid #ccc', paddingBottom: '0.5rem', marginTop: '3rem' }}>
+                High-Protein / Low-Carb List
+            </h2>
+            {/* Uses responsive CSS class defined in global.css */}
+            <div className="main-grid"> 
+                {Object.entries(highProteinList).map(([category, items], idx) => (
+                    <ShoppingListCard key={idx} category={category} items={items} color="#eef2ff" />
+                ))}
+            </div>
+
+            {/* MIND Diet List */}
+            <h2 style={{ color: "#8460F0", textAlign: "center", borderBottom: '2px solid #ccc', paddingBottom: '0.5rem', marginTop: '3rem' }}>
+                MIND Diet (Mental Health) List
+            </h2>
+            {/* Uses responsive CSS class defined in global.css */}
+            <div className="main-grid">
         "Shrimp", "Eggs, Canned tuna", "Cottage cheese, Greek yogurt", "Protein powder",
     ],
     Vegetables: [
