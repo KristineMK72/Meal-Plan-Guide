@@ -16,7 +16,7 @@ export default function MindDiet() {
             <p>
                 The **Gut-Brain Axis** is a constant two-way street of communication between your digestive system and your brain. A healthy, diverse gut microbiome (the community of bacteria in your gut) produces crucial neurotransmitters and reduces systemic inflammation, which directly supports good mental health and clear cognition. 
 
-[Image of Gut-Brain Axis diagram]
+
 
             </p>
             
@@ -25,7 +25,7 @@ export default function MindDiet() {
                 The **MIND (Mediterranean-DASH Intervention for Neurodegenerative Delay) diet** is a hybrid of two established heart-healthy diets, tailored to maximize brain benefits by focusing on anti-inflammatory foods.
             </p>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginTop: '2rem' }}>
+           <div className="two-col-grid" style={{ marginTop: '2rem' }}>
                 <div>
                     <h3 style={{ color: '#00b386' }}>✅ Foods to Embrace (Brain Boosters)</h3>
                     <ul style={{ paddingLeft: '20px' }}>
