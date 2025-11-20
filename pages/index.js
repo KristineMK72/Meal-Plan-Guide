@@ -43,6 +43,34 @@ export default function Home() {
                 </li>
             </ul>
 
+            {/* START OF NEW SECTION: Diet for Mood and Cognition */}
+            <h2 style={{ color: "#333", marginTop: "3rem" }}>Diet for Mood and Cognition</h2>
+            <p>
+                The food you eat affects your mood through the **Gut-Brain Axis**. High-quality diets, like the **MIND Diet**, provide the essential nutrients (especially Omega-3s and antioxidants) needed to support neurotransmitter production and reduce chronic inflammation in the brain. 
+
+[Image of Gut-Brain Axis diagram]
+
+            </p>
+            <Link 
+                href="/mind-diet" 
+                style={{ 
+                    padding: '0.75rem 1.5rem', 
+                    background: '#8460F0', // Purple for Mind Diet
+                    color: 'white', 
+                    borderRadius: '8px', 
+                    textDecoration: 'none', 
+                    fontWeight: 'bold',
+                    display: 'inline-block',
+                    marginTop: '1rem',
+                    marginBottom: '2rem'
+                }}
+            >
+                Explore the Anti-Inflammatory MIND Diet 🧠
+            </Link>
+            {/* END OF NEW SECTION */}
+
+            <hr />
+
             <h2 style={{ color: "#333" }}>Sources and Further Reading</h2>
             <blockquote style={{ borderLeft: '4px solid #ccc', paddingLeft: '1rem', margin: '1rem 0', fontStyle: 'italic' }}>
                 <p>— **Source 1 (Metabolism):** Dietary protein intake is associated with reduced body fat and improved satiety. (e.g., *Schoeller, D.A., and A.M. Buchholz, 2005*)</p>
