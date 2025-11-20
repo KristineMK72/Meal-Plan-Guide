@@ -70,12 +70,11 @@ export default function Home() {
             {/* END OF NEW SECTION */}
 
             <hr />
-
             <h2 style={{ color: "#333" }}>Sources and Further Reading</h2>
             <blockquote style={{ borderLeft: '4px solid #ccc', paddingLeft: '1rem', margin: '1rem 0', fontStyle: 'italic' }}>
-                <p>— **Source 1 (Metabolism):** Dietary protein intake is associated with reduced body fat and improved satiety. (e.g., <a href="https://doi.org/10.1093/ajcn/81.1.206S" target="_blank" rel="noopener noreferrer">*Schoeller, D.A., and A.M. Buchholz, 2005*</a>)</p>
-                <p>— **Source 2 (Weight Management):** Low-carbohydrate diets are effective for weight loss and cardiovascular risk factors, at least in the short term. (e.g., <a href="https://doi.org/10.1186/1743-7075-5-24" target="_blank" rel="noopener noreferrer">*Volek, J.S., and R.D. Feinman, 2008*</a>)</p>
-                <p>— **Source 3 (Appetite Control):** The role of protein in energy balance and body weight regulation. (e.g., <a href="https://doi.org/10.1080/07315724.2004.10719391" target="_blank" rel="noopener noreferrer">*Halton, T.L., and F.B. Hu, 2004*</a>)</p>
+                <p>— **Source 1 (Metabolism):** Dietary protein intake is associated with reduced body fat and improved satiety. (e.g., <a href="https://doi.org/10.1093/ajcn/82.1.206S" target="_blank" rel="noopener noreferrer">*Schoeller, D.A., and A.M. Buchholz, 2005*</a>)</p>
+                <p>— **Source 2 (Weight Management):** Low-carbohydrate diets are effective for weight loss and cardiovascular risk factors, at least in the short term. (e.g., <a href="https://doi.org/10.1186/1743-7075-5-36" target="_blank" rel="noopener noreferrer">*Volek, J.S., and R.D. Feinman, 2008*</a>)</p>
+                <p>— **Source 3 (Appetite Control):** The role of protein in energy balance and body weight regulation. (e.g., <a href="https://doi.org/10.1016/j.ajcn.2003.04.029" target="_blank" rel="noopener noreferrer">*Halton, T.L., and F.B. Hu, 2004*</a>)</p>
             </blockquote>
 
             <p style={{ fontSize: '0.9rem', color: '#888' }}>
