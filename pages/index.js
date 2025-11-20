@@ -14,6 +14,7 @@ export default function Home() {
             </p>
 
             {/* Benefit Buttons */}
+            <div className="center-on-mobile" style={{ display: 'flex', justifyContent: 'center', gap: '2rem', marginBottom: '3rem' }}>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem', marginBottom: '3rem' }}>
                 <Link href="/meal-plan" style={{ padding: '0.75rem 1.5rem', background: '#1845AD', color: 'white', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold' }}>
                     View 7-Day Meal Plan 🍽️
@@ -48,7 +49,7 @@ export default function Home() {
             <p>
                 The food you eat affects your mood through the **Gut-Brain Axis**. High-quality diets, like the **MIND Diet**, provide the essential nutrients (especially Omega-3s and antioxidants) needed to support neurotransmitter production and reduce chronic inflammation in the brain. 
 
-[Image of Gut-Brain Axis diagram]
+
 
             </p>
             <Link 
@@ -68,11 +69,6 @@ export default function Home() {
                 Explore the Anti-Inflammatory MIND Diet 🧠
             </Link>
             {/* END OF NEW SECTION */}
-
-            <hr />
-            <h2 style={{ color: "#333" }}>Sources and Further Reading coming soon</h2>
-            <blockquote style={{ borderLeft: '4px solid #ccc', paddingLeft: '1rem', margin: '1rem 0', fontStyle: 'italic' }}>
-                
 
             <p style={{ fontSize: '0.9rem', color: '#888' }}>
                 *Note: Always consult a healthcare professional or registered dietitian before starting any new diet plan.*
