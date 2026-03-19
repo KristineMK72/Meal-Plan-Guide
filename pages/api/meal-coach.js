@@ -4,7 +4,7 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-function safeParse(text) {
+function safeParseJSON(text) {
   try {
     return JSON.parse(text);
   } catch {
@@ -26,46 +26,60 @@ export default async function handler(req, res) {
       dislikes = "",
       allergies = "",
       budget = "",
+      household = "",
       notes = "",
     } = req.body || {};
 
     const prompt = `
-You are a helpful meal planner.
+You are a practical meal-planning assistant.
 
-Create a ${days}-day meal plan.
+Create a realistic ${days}-day meal plan for this person.
 
 User preferences:
 - Goal: ${goal}
-- Calories: ${calories || "not specified"}
-- Protein: ${protein || "not specified"}
+- Daily calories target: ${calories || "not specified"}
+- Daily protein target: ${protein || "not specified"}
 - Dislikes: ${dislikes || "none"}
-- Allergies: ${allergies || "none"}
+- Allergies/restrictions: ${allergies || "none"}
 - Budget: ${budget || "not specified"}
-- Notes: ${notes || "none"}
+- Household size: ${household || "not specified"}
+- Extra notes: ${notes || "none"}
 
 Rules:
-- Keep meals simple and realistic
-- Reuse ingredients when possible
-- Include breakfast, lunch, dinner, snacks
-- Include prep tips
-- Return ONLY valid JSON (no markdown)
+- Keep meals realistic and easy to grocery shop for.
+- Reuse ingredients when possible to reduce cost and waste.
+- Include breakfast, lunch, dinner, and 1-2 snack ideas each day.
+- Include brief prep guidance.
+- Avoid medical claims.
+- Return VALID JSON ONLY.
+- Do not wrap the JSON in markdown fences.
 
-Use this format:
+Use this exact shape:
 {
   "title": "string",
+  "summary": "string",
   "days": [
     {
       "day": 1,
       "breakfast": "string",
       "lunch": "string",
       "dinner": "string",
-      "snacks": ["string"],
+      "snacks": ["string", "string"],
+      "estimated_macros": {
+        "calories": "string",
+        "protein": "string",
+        "carbs": "string",
+        "fat": "string"
+      },
       "prep_tip": "string"
     }
   ],
   "shopping_list": {
     "proteins": ["string"],
     "vegetables": ["string"],
+    "fruits": ["string"],
+    "grains_and_starches": ["string"],
+    "dairy_or_alternatives": ["string"],
     "pantry": ["string"]
   }
 }
@@ -77,20 +91,21 @@ Use this format:
     });
 
     const text = response.output_text || "";
-    const parsed = safeParse(text);
+    const parsed = safeParseJSON(text);
 
     if (!parsed) {
       return res.status(200).json({
-        error: "AI response was not valid JSON",
+        warning: "The model returned text instead of clean JSON.",
         raw: text,
       });
     }
 
     return res.status(200).json(parsed);
-  } catch (err) {
-    console.error("Meal API error:", err);
+  } catch (error) {
+    console.error("meal-coach error:", error);
     return res.status(500).json({
       error: "Failed to generate meal plan",
+      details: error?.message || "Unknown error",
     });
   }
 }
