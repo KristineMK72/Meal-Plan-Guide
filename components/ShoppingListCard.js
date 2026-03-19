@@ -64,12 +64,13 @@ export default function ShoppingListCard({ shoppingList }) {
 
 const styles = {
   panel: {
-    background: "#ffffff",
-    border: "1px solid #e5e7eb",
-    borderRadius: 24,
-    padding: 22,
-    boxShadow: "0 10px 30px rgba(15, 23, 42, 0.06)",
-  },
+  background: "rgba(255,255,255,0.82)",
+  backdropFilter: "blur(14px)",
+  border: "1px solid rgba(255,255,255,0.7)",
+  borderRadius: 28,
+  padding: 22,
+  boxShadow: "0 18px 50px rgba(15, 23, 42, 0.08)",
+},
   header: {
     display: "flex",
     justifyContent: "space-between",
