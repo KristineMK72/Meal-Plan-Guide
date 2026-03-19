@@ -1,8 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 export default function Home() {
   const [form, setForm] = useState({
-    goal: "high-protein fat loss",
+    goal: "high-protein low-carb",
     days: 7,
     calories: "",
     protein: "",
@@ -16,12 +16,12 @@ export default function Home() {
   const [plan, setPlan] = useState(null);
   const [error, setError] = useState("");
 
-  function update(e) {
+  function updateField(e) {
     const { name, value } = e.target;
-    setForm((f) => ({ ...f, [name]: value }));
+    setForm((prev) => ({ ...prev, [name]: value }));
   }
 
-  async function generate(e) {
+  async function generatePlan(e) {
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -33,15 +33,14 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          ...form,
-          days: Number(form.days),
-        }),
+        body: JSON.stringify(form),
       });
 
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data.error || "Failed");
+      if (!res.ok) {
+        throw new Error(data.error || "Something went wrong");
+      }
 
       setPlan(data);
     } catch (err) {
@@ -52,88 +51,92 @@ export default function Home() {
   }
 
   return (
-    <main style={styles.page}>
-        <textarea name="notes" value={form.notes} onChange={update} placeholder="Extra notes" />
+    <main style={{ maxWidth: 1000, margin: "0 auto", padding: "2rem" }}>
+      <h1>AI Meal Plan Guide</h1>
+      <p>
+        Build a personalized high-protein meal plan with OpenAI.
+      </p>
+
+      <form onSubmit={generatePlan} style={{ display: "grid", gap: "1rem", marginTop: "1.5rem" }}>
+        <input name="goal" value={form.goal} onChange={updateField} placeholder="Goal" />
+        <input name="days" type="number" value={form.days} onChange={updateField} placeholder="Days" />
+        <input name="calories" value={form.calories} onChange={updateField} placeholder="Calories target" />
+        <input name="protein" value={form.protein} onChange={updateField} placeholder="Protein target" />
+        <input name="dislikes" value={form.dislikes} onChange={updateField} placeholder="Dislikes" />
+        <input name="allergies" value={form.allergies} onChange={updateField} placeholder="Allergies" />
+        <input name="budget" value={form.budget} onChange={updateField} placeholder="Budget" />
+        <textarea name="notes" value={form.notes} onChange={updateField} placeholder="Extra notes" rows={4} />
+
+        <button type="submit" disabled={loading}>
+          {loading ? "Generating..." : "Generate AI Meal Plan"}
         </button>
       </form>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && (
+        <p style={{ color: "crimson", marginTop: "1rem" }}>
+          {error}
+        </p>
+      )}
 
       {plan && (
-        <div style={styles.results}>
+        <section style={{ marginTop: "2rem" }}>
           <h2>{plan.title}</h2>
+          <p>{plan.summary}</p>
 
-          {plan.days?.map((d) => (
-            <div key={d.day} style={styles.card}>
-              <h3>Day {d.day}</h3>
-              <p><strong>Breakfast:</strong> {d.breakfast}</p>
-              <p><strong>Lunch:</strong> {d.lunch}</p>
-              <p><strong>Dinner:</strong> {d.dinner}</p>
-              <p><strong>Snacks:</strong> {d.snacks?.join(", ")}</p>
-              <p><strong>Prep Tip:</strong> {d.prep_tip}</p>
+          {plan.days?.map((day) => (
+            <div
+              key={day.day}
+              style={{
+                border: "1px solid #ddd",
+                borderRadius: 12,
+                padding: "1rem",
+                marginTop: "1rem",
+              }}
+            >
+              <h3>Day {day.day}</h3>
+              <p><strong>Breakfast:</strong> {day.breakfast}</p>
+              <p><strong>Lunch:</strong> {day.lunch}</p>
+              <p><strong>Dinner:</strong> {day.dinner}</p>
+              <p><strong>Snacks:</strong> {day.snacks?.join(", ")}</p>
+
+              {day.estimated_macros && (
+                <p>
+                  <strong>Estimated Macros:</strong>{" "}
+                  {day.estimated_macros.calories} calories ·{" "}
+                  {day.estimated_macros.protein} protein ·{" "}
+                  {day.estimated_macros.carbs} carbs ·{" "}
+                  {day.estimated_macros.fat} fat
+                </p>
+              )}
             </div>
           ))}
 
-          <h2>🛒 Shopping List</h2>
+          {plan.shopping_list && (
+            <div style={{ marginTop: "2rem" }}>
+              <h2>Shopping List</h2>
 
-          {Object.entries(plan.shopping_list || {}).map(([key, items]) => (
-            <div key={key}>
-              <h4>{key}</h4>
-              <ul>
-                {items.map((i, idx) => (
-                  <li key={idx}>{i}</li>
-                ))}
-              </ul>
+              <h4>Proteins</h4>
+              <ul>{plan.shopping_list.proteins?.map((item, i) => <li key={i}>{item}</li>)}</ul>
+
+              <h4>Vegetables</h4>
+              <ul>{plan.shopping_list.vegetables?.map((item, i) => <li key={i}>{item}</li>)}</ul>
+
+              <h4>Fruits</h4>
+              <ul>{plan.shopping_list.fruits?.map((item, i) => <li key={i}>{item}</li>)}</ul>
+
+              <h4>Pantry</h4>
+              <ul>{plan.shopping_list.pantry?.map((item, i) => <li key={i}>{item}</li>)}</ul>
             </div>
-          ))}
-        </div>
+          )}
+
+          {plan.prep_tips && (
+            <div style={{ marginTop: "2rem" }}>
+              <h2>Prep Tips</h2>
+              <ul>{plan.prep_tips.map((tip, i) => <li key={i}>{tip}</li>)}</ul>
+            </div>
+          )}
+        </section>
       )}
     </main>
   );
 }
-
-const styles = {
-  page: {
-    maxWidth: 900,
-    margin: "0 auto",
-    padding: 20,
-    fontFamily: "Arial",
-  },
-  title: {
-    fontSize: 36,
-    marginBottom: 5,
-  },
-  subtitle: {
-    color: "#555",
-    marginBottom: 20,
-  },
-  form: {
-    display: "grid",
-    gap: 10,
-    marginBottom: 30,
-  },
-  results: {
-    marginTop: 20,
-  },
-  card: {
-    border: "1px solid #ddd",
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 15,
-  },
-};
-        <button type="submit" disabled={loading}>
-          {loading ? "Generating..." : "Generate Meal Plan"}
-      <h1 style={styles.title}>🥗 AI Meal Planner</h1>
-        <input name="allergies" value={form.allergies} onChange={update} placeholder="Allergies" />
-        <input name="budget" value={form.budget} onChange={update} placeholder="Budget" />
-      <p style={styles.subtitle}>
-        <input name="protein" value={form.protein} onChange={update} placeholder="Protein target" />
-        <input name="dislikes" value={form.dislikes} onChange={update} placeholder="Dislikes" />
-        Build a personalized meal plan in seconds
-      </p>
-        <input name="calories" value={form.calories} onChange={update} placeholder="Calories target" />
-
-      <form onSubmit={generate} style={styles.form}>
-        <input name="goal" value={form.goal} onChange={update} placeholder="Goal (fat loss, muscle gain...)" />
-
