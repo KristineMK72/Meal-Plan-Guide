@@ -1,41 +1,81 @@
 // /components/Navbar.js
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <nav className="navbar-container" style={{
-      background: '#1845AD',
-      padding: '1rem 2rem',
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      boxShadow: '0 2px 5px rgba(0,0,0,0.2)',
-    }}>
-      <Link href="/" style={{ 
-        color: 'white', 
-        fontSize: '1.5rem', 
-        fontWeight: 'bold',
-        textDecoration: 'none' 
-      }}>
-        Fuel & Flourish 🌱
-      </Link>
-      
-      {/* This div is now clean and uses the responsive class */}
-      <div className="nav-links" style={{ display: 'flex', gap: '2rem' }}>
-        <Link href="/" style={navLinkStyle}>Home</Link>
-        <Link href="/meal-plan" style={navLinkStyle}>Meal Plan</Link>
-        <Link href="/shoplist" style={navLinkStyle}>Shopping List</Link>
-        <Link href="/mind-diet" style={navLinkStyle}>Mind Diet</Link>
-        <Link href="/sustainability" style={navLinkStyle}>Sustainability</Link>
+    <nav style={styles.nav}>
+      <div style={styles.logo}>
+        <div style={styles.logoMark}>M</div>
+        <span style={styles.logoText}>Morgan</span>
+      </div>
+
+      <div style={styles.links}>
+        <Link href="/" style={styles.link}>Plan</Link>
+        <Link href="/meal-plan" style={styles.link}>Meals</Link>
+        <Link href="/shoplist" style={styles.link}>Shop</Link>
+        <Link href="/mind-diet" style={styles.link}>Mind</Link>
       </div>
     </nav>
   );
 }
 
-const navLinkStyle = {
-  color: 'white',
-  textDecoration: 'none',
-  fontSize: '1.1rem',
-  padding: '0.5rem 0',
-  transition: 'color 0.2s',
+const styles = {
+  nav: {
+    position: "sticky",
+    top: 0,
+    zIndex: 50,
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "14px 20px",
+    marginBottom: 24,
+
+    // ✨ GLASS LOOK
+    background: "rgba(15, 23, 42, 0.6)",
+    backdropFilter: "blur(14px)",
+    border: "1px solid rgba(255,255,255,0.08)",
+    borderRadius: 16,
+
+    boxShadow: "0 10px 30px rgba(0,0,0,0.25)",
+  },
+
+  logo: {
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+  },
+
+  logoMark: {
+    width: 34,
+    height: 34,
+    borderRadius: "50%",
+    display: "grid",
+    placeItems: "center",
+    fontWeight: 800,
+    color: "#fff",
+    background: "linear-gradient(135deg, #0ea5e9, #22c55e)",
+    boxShadow: "0 6px 16px rgba(14,165,233,0.4)",
+  },
+
+  logoText: {
+    color: "#f8fafc",
+    fontSize: 18,
+    fontWeight: 700,
+    letterSpacing: "0.02em",
+  },
+
+  links: {
+    display: "flex",
+    gap: 18,
+  },
+
+  link: {
+    color: "#cbd5e1",
+    textDecoration: "none",
+    fontSize: 14,
+    fontWeight: 500,
+    padding: "6px 10px",
+    borderRadius: 10,
+    transition: "all 0.2s ease",
+  },
 };
