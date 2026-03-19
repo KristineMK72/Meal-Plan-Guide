@@ -26,14 +26,15 @@ export default async function handler(req, res) {
       dislikes = "",
       allergies = "",
       budget = "",
-      household = "",
+      household = "1",
+      pantry = "",
       notes = "",
     } = req.body || {};
 
     const prompt = `
-You are a helpful meal planner.
+You are a helpful meal planner and grocery planning assistant.
 
-Create a ${days}-day meal plan.
+Create a realistic ${days}-day meal plan.
 
 User preferences:
 - Goal: ${goal}
@@ -42,17 +43,21 @@ User preferences:
 - Dislikes: ${dislikes || "none"}
 - Allergies: ${allergies || "none"}
 - Budget: ${budget || "not specified"}
-- Household size: ${household || "not specified"}
+- Household size: ${household || "1"}
+- Pantry ingredients already on hand: ${pantry || "none listed"}
 - Notes: ${notes || "none"}
 
 Rules:
-- Keep meals simple and realistic
-- Reuse ingredients when possible
-- Include breakfast, lunch, dinner, snacks
-- Include prep tips
-- Return ONLY valid JSON (no markdown)
+- Keep meals simple and realistic.
+- Reuse ingredients when possible.
+- Respect allergies and dislikes.
+- Use pantry ingredients when helpful.
+- Include breakfast, lunch, dinner, and snacks.
+- Include prep tips.
+- Build a grouped shopping list based mostly on ingredients not already in the pantry.
+- Return ONLY valid JSON. No markdown fences.
 
-Use this format:
+Use this exact structure:
 {
   "title": "string",
   "summary": "string",
@@ -62,7 +67,7 @@ Use this format:
       "breakfast": "string",
       "lunch": "string",
       "dinner": "string",
-      "snacks": ["string"],
+      "snacks": ["string", "string"],
       "prep_tip": "string"
     }
   ],
