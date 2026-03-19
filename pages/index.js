@@ -1,102 +1,173 @@
-import OpenAI from "openai";
+import { useState } from "react";
+import AppShell from "../components/AppShell";
+import PlannerForm from "../components/PlannerForm";
+import MealPlanResults from "../components/MealPlanResults";
+import ShoppingListCard from "../components/ShoppingListCard";
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const presets = [
+  "high-protein fat loss",
+  "budget-friendly meals",
+  "easy meal prep",
+  "family dinners",
+  "low-carb",
+  "brain-friendly meals",
+  "muscle gain",
+];
 
-function safeParse(text) {
-  try {
-    return JSON.parse(text);
-  } catch {
-    return null;
+export default function Home() {
+  const [form, setForm] = useState({
+    goal: "high-protein fat loss",
+    days: 7,
+    calories: "",
+    protein: "",
+    dislikes: "",
+    allergies: "",
+    budget: "",
+    household: "1",
+    pantry: "",
+    notes: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [plan, setPlan] = useState(null);
+  const [error, setError] = useState("");
+  const [savedMessage, setSavedMessage] = useState("");
+
+  function updateField(e) {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
   }
-}
 
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+  function applyPreset(preset) {
+    setForm((prev) => ({ ...prev, goal: preset }));
   }
 
-  try {
-    const {
-      goal = "high-protein",
-      days = 7,
-      calories = "",
-      protein = "",
-      dislikes = "",
-      allergies = "",
-      budget = "",
-      household = "",
-      notes = "",
-    } = req.body || {};
+  async function generatePlan(e) {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    setPlan(null);
+    setSavedMessage("");
 
-    const prompt = `
-You are a helpful meal planner.
-
-Create a ${days}-day meal plan.
-
-User preferences:
-- Goal: ${goal}
-- Calories: ${calories || "not specified"}
-- Protein: ${protein || "not specified"}
-- Dislikes: ${dislikes || "none"}
-- Allergies: ${allergies || "none"}
-- Budget: ${budget || "not specified"}
-- Household size: ${household || "not specified"}
-- Notes: ${notes || "none"}
-
-Rules:
-- Keep meals simple and realistic
-- Reuse ingredients when possible
-- Include breakfast, lunch, dinner, snacks
-- Include prep tips
-- Return ONLY valid JSON (no markdown)
-
-Use this format:
-{
-  "title": "string",
-  "summary": "string",
-  "days": [
-    {
-      "day": 1,
-      "breakfast": "string",
-      "lunch": "string",
-      "dinner": "string",
-      "snacks": ["string"],
-      "prep_tip": "string"
-    }
-  ],
-  "shopping_list": {
-    "proteins": ["string"],
-    "vegetables": ["string"],
-    "fruits": ["string"],
-    "grains_and_starches": ["string"],
-    "dairy_or_alternatives": ["string"],
-    "pantry": ["string"]
-  }
-}
-`;
-
-    const response = await client.responses.create({
-      model: "gpt-5.4",
-      input: prompt,
-    });
-
-    const text = response.output_text || "";
-    const parsed = safeParse(text);
-
-    if (!parsed) {
-      return res.status(200).json({
-        error: "AI response was not valid JSON",
-        raw: text,
+    try {
+      const res = await fetch("/api/meal-coach", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...form,
+          days: Number(form.days) || 7,
+        }),
       });
-    }
 
-    return res.status(200).json(parsed);
-  } catch (err) {
-    console.error("Meal API error:", err);
-    return res.status(500).json({
-      error: "Failed to generate meal plan",
-    });
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to generate meal plan");
+      }
+
+      if (data.error && data.raw) {
+        throw new Error("The AI returned an unexpected format. Please try again.");
+      }
+
+      setPlan(data);
+    } catch (err) {
+      setError(err.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   }
+
+  function savePlan() {
+    if (!plan) return;
+
+    try {
+      const existing = JSON.parse(localStorage.getItem("savedMealPlans") || "[]");
+      const next = [
+        {
+          id: Date.now(),
+          createdAt: new Date().toISOString(),
+          form,
+          plan,
+        },
+        ...existing,
+      ];
+      localStorage.setItem("savedMealPlans", JSON.stringify(next));
+      setSavedMessage("Plan saved on this device.");
+    } catch {
+      setSavedMessage("Could not save this plan.");
+    }
+  }
+
+  return (
+    <AppShell>
+      <div style={styles.hero}>
+        <div style={styles.badge}>Meal Planner App</div>
+        <h1 style={styles.title}>AI Meal + Shopping Planner</h1>
+        <p style={styles.subtitle}>
+          Build a meal plan around your goals, budget, household, and pantry —
+          then get a shopping list you can actually use.
+        </p>
+      </div>
+
+      <div style={styles.grid}>
+        <PlannerForm
+          form={form}
+          presets={presets}
+          loading={loading}
+          error={error}
+          updateField={updateField}
+          applyPreset={applyPreset}
+          onSubmit={generatePlan}
+        />
+
+        <div style={styles.rightColumn}>
+          <MealPlanResults plan={plan} onSave={savePlan} savedMessage={savedMessage} />
+          <ShoppingListCard shoppingList={plan?.shopping_list} />
+        </div>
+      </div>
+    </AppShell>
+  );
 }
+
+const styles = {
+  hero: {
+    background: "linear-gradient(135deg, #ffffff 0%, #eef7ff 60%, #e8fff5 100%)",
+    border: "1px solid #dbeafe",
+    borderRadius: 24,
+    padding: 28,
+    marginBottom: 22,
+    boxShadow: "0 10px 30px rgba(15, 23, 42, 0.06)",
+  },
+  badge: {
+    display: "inline-block",
+    fontSize: 12,
+    fontWeight: 700,
+    letterSpacing: "0.08em",
+    textTransform: "uppercase",
+    color: "#0369a1",
+    marginBottom: 10,
+  },
+  title: {
+    margin: "0 0 10px 0",
+    fontSize: 42,
+    lineHeight: 1.05,
+    color: "#0f172a",
+  },
+  subtitle: {
+    margin: 0,
+    fontSize: 18,
+    color: "#475569",
+    maxWidth: 760,
+  },
+  grid: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1.1fr",
+    gap: 22,
+  },
+  rightColumn: {
+    display: "grid",
+    gap: 22,
+  },
+};
