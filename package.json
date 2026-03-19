@@ -7,9 +7,10 @@
     "start": "next start"
   },
   "dependencies": {
-    "next": "14.1.0",
+    "next": "^16.2.0",
+    "openai": "^6.32.0",
+    "pdfkit": "0.13.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "pdfkit": "0.13.0"
+    "react-dom": "18.2.0"
   }
 }
