@@ -4,7 +4,7 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-function safeParseJSON(text) {
+function safeParse(text) {
   try {
     return JSON.parse(text);
   } catch {
@@ -31,30 +31,28 @@ export default async function handler(req, res) {
     } = req.body || {};
 
     const prompt = `
-You are a practical meal-planning assistant.
+You are a helpful meal planner.
 
-Create a realistic ${days}-day meal plan for this person.
+Create a ${days}-day meal plan.
 
 User preferences:
 - Goal: ${goal}
-- Daily calories target: ${calories || "not specified"}
-- Daily protein target: ${protein || "not specified"}
+- Calories: ${calories || "not specified"}
+- Protein: ${protein || "not specified"}
 - Dislikes: ${dislikes || "none"}
-- Allergies/restrictions: ${allergies || "none"}
+- Allergies: ${allergies || "none"}
 - Budget: ${budget || "not specified"}
 - Household size: ${household || "not specified"}
-- Extra notes: ${notes || "none"}
+- Notes: ${notes || "none"}
 
 Rules:
-- Keep meals realistic and easy to grocery shop for.
-- Reuse ingredients when possible to reduce cost and waste.
-- Include breakfast, lunch, dinner, and 1-2 snack ideas each day.
-- Include brief prep guidance.
-- Avoid medical claims.
-- Return VALID JSON ONLY.
-- Do not wrap the JSON in markdown fences.
+- Keep meals simple and realistic
+- Reuse ingredients when possible
+- Include breakfast, lunch, dinner, snacks
+- Include prep tips
+- Return ONLY valid JSON (no markdown)
 
-Use this exact shape:
+Use this format:
 {
   "title": "string",
   "summary": "string",
@@ -64,13 +62,7 @@ Use this exact shape:
       "breakfast": "string",
       "lunch": "string",
       "dinner": "string",
-      "snacks": ["string", "string"],
-      "estimated_macros": {
-        "calories": "string",
-        "protein": "string",
-        "carbs": "string",
-        "fat": "string"
-      },
+      "snacks": ["string"],
       "prep_tip": "string"
     }
   ],
@@ -91,21 +83,20 @@ Use this exact shape:
     });
 
     const text = response.output_text || "";
-    const parsed = safeParseJSON(text);
+    const parsed = safeParse(text);
 
     if (!parsed) {
       return res.status(200).json({
-        warning: "The model returned text instead of clean JSON.",
+        error: "AI response was not valid JSON",
         raw: text,
       });
     }
 
     return res.status(200).json(parsed);
-  } catch (error) {
-    console.error("meal-coach error:", error);
+  } catch (err) {
+    console.error("Meal API error:", err);
     return res.status(500).json({
       error: "Failed to generate meal plan",
-      details: error?.message || "Unknown error",
     });
   }
 }
