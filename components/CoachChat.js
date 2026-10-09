@@ -33,31 +33,20 @@ export default function CoachChat({ plan }) {
     try {
       const res = await fetch("/api/meal-chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: text,
-          plan,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text, plan }),
       });
 
       const data = await res.json();
 
       setMessages((m) => [
         ...m,
-        {
-          role: "assistant",
-          text: data.reply || "I’ve got a few ideas for that.",
-        },
+        { role: "assistant", text: data.reply || "I’ve got a few ideas for that." },
       ]);
     } catch {
       setMessages((m) => [
         ...m,
-        {
-          role: "assistant",
-          text: "Something hiccupped there. Try me again.",
-        },
+        { role: "assistant", text: "Something hiccupped there. Try me again." },
       ]);
     } finally {
       setLoading(false);
@@ -75,20 +64,16 @@ export default function CoachChat({ plan }) {
     <section className="glass-panel animate-in animate-in-delay-3">
       <div className="header-row">
         <div>
-          <div style={styles.eyebrow}>Morgan Coach</div>
-          <h2 style={styles.title} className="panel-title-mobile">
-            Ask Morgan anything
-          </h2>
-          <p style={styles.sub}>
+          <div className="page-eyebrow">Morgan Coach</div>
+          <h2 className="panel-heading panel-title-mobile">Ask Morgan anything</h2>
+          <p className="muted-text">
             Recipes, swaps, pantry ideas, grocery help, or a little motivation.
           </p>
         </div>
-        <div style={styles.avatar} className="morgan-orb-live">
-          M
-        </div>
+        <div className="chat-avatar morgan-orb-live">M</div>
       </div>
 
-      <div style={styles.starters}>
+      <div className="preset-wrap">
         {starters.map((item) => (
           <button
             key={item}
@@ -102,20 +87,17 @@ export default function CoachChat({ plan }) {
         ))}
       </div>
 
-      <div style={styles.chatBox}>
+      <div className="chat-box">
         {messages.map((msg, i) => (
           <div
             key={i}
-            style={{
-              ...styles.msg,
-              ...(msg.role === "user" ? styles.userMsg : styles.assistantMsg),
-            }}
+            className={`chat-bubble ${msg.role === "user" ? "chat-bubble-user" : "chat-bubble-bot"}`}
           >
             {msg.text}
           </div>
         ))}
         {loading ? (
-          <div style={styles.loading}>
+          <div className="chat-loading">
             <span className="typing-dots" aria-label="Morgan is typing">
               <span />
               <span />
@@ -129,103 +111,16 @@ export default function CoachChat({ plan }) {
 
       <form onSubmit={sendMessage} className="chat-form">
         <input
-          style={styles.input}
+          className="field-input"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Ask for a recipe, a swap, or a smarter grocery plan..."
           aria-label="Message Morgan"
         />
-        <button
-          className="action-btn action-btn-primary"
-          style={styles.btn}
-          disabled={loading}
-        >
+        <button className="action-btn action-btn-primary" disabled={loading}>
           Send
         </button>
       </form>
     </section>
   );
 }
-
-const styles = {
-  eyebrow: {
-    fontSize: 12,
-    fontWeight: 700,
-    letterSpacing: "0.08em",
-    textTransform: "uppercase",
-    color: "#0284c7",
-    marginBottom: 6,
-  },
-  title: {
-    margin: "0 0 6px 0",
-    fontSize: 28,
-    color: "#0f172a",
-  },
-  sub: {
-    margin: 0,
-    color: "#475569",
-  },
-  avatar: {
-    width: 52,
-    height: 52,
-    borderRadius: "50%",
-    display: "grid",
-    placeItems: "center",
-    fontWeight: 800,
-    color: "#fff",
-    background: "linear-gradient(135deg, #0ea5e9 0%, #22c55e 100%)",
-    flexShrink: 0,
-  },
-  starters: {
-    display: "flex",
-    flexWrap: "wrap",
-    gap: 10,
-    marginBottom: 14,
-  },
-  chatBox: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 10,
-    maxHeight: 360,
-    overflowY: "auto",
-    padding: "8px 2px",
-    marginBottom: 12,
-  },
-  msg: {
-    padding: "12px 14px",
-    borderRadius: 16,
-    maxWidth: "90%",
-    lineHeight: 1.45,
-    wordBreak: "break-word",
-  },
-  userMsg: {
-    alignSelf: "flex-end",
-    background: "#dbeafe",
-    color: "#0f172a",
-  },
-  assistantMsg: {
-    alignSelf: "flex-start",
-    background: "#f1f5f9",
-    color: "#0f172a",
-  },
-  loading: {
-    color: "#64748b",
-    fontSize: 14,
-    paddingLeft: 2,
-    display: "flex",
-    alignItems: "center",
-    gap: 8,
-  },
-  input: {
-    flex: 1,
-    minWidth: 0,
-    padding: "12px 14px",
-    borderRadius: 14,
-    border: "1px solid #cbd5e1",
-    fontSize: 16,
-  },
-  btn: {
-    padding: "12px 16px",
-    borderRadius: 14,
-  },
-};

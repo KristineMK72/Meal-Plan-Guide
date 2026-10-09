@@ -11,7 +11,7 @@ const links = [
   { href: "/saved", label: "Saved" },
 ];
 
-export default function Navbar({ theme = "light", onToggleTheme, themeReady }) {
+export default function Navbar({ theme = "light", onToggleTheme }) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
@@ -24,22 +24,20 @@ export default function Navbar({ theme = "light", onToggleTheme, themeReady }) {
     <nav className="navbar" aria-label="Main">
       <div className="navbar-top">
         <Link href="/" className="navbar-logo" onClick={() => setOpen(false)}>
-          <div style={styles.logoMark}>M</div>
-          <span style={styles.logoText}>Morgan</span>
+          <div className="navbar-logo-mark">M</div>
+          <span className="navbar-logo-text">Morgan</span>
         </Link>
 
-        <div style={styles.topActions}>
-          {themeReady ? (
-            <button
-              type="button"
-              className="theme-toggle"
-              onClick={onToggleTheme}
-              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-              title={theme === "dark" ? "Light mode" : "Dark mode"}
-            >
-              {theme === "dark" ? "☀️" : "🌙"}
-            </button>
-          ) : null}
+        <div className="navbar-top-actions">
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={onToggleTheme}
+            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            {theme === "dark" ? "☀️ Light" : "🌙 Dark"}
+          </button>
 
           <button
             type="button"
@@ -64,41 +62,7 @@ export default function Navbar({ theme = "light", onToggleTheme, themeReady }) {
             {link.label}
           </Link>
         ))}
-        <button
-          type="button"
-          className="theme-toggle theme-toggle-desktop"
-          onClick={onToggleTheme}
-          aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-        >
-          {theme === "dark" ? "☀️ Light" : "🌙 Dark"}
-        </button>
       </div>
     </nav>
   );
 }
-
-const styles = {
-  logoMark: {
-    width: 34,
-    height: 34,
-    borderRadius: "50%",
-    display: "grid",
-    placeItems: "center",
-    fontWeight: 800,
-    color: "#fff",
-    background: "linear-gradient(135deg, #0ea5e9, #22c55e)",
-    boxShadow: "0 6px 16px rgba(14,165,233,0.4)",
-    flexShrink: 0,
-  },
-  logoText: {
-    color: "#f8fafc",
-    fontSize: 18,
-    fontWeight: 700,
-    letterSpacing: "0.02em",
-  },
-  topActions: {
-    display: "flex",
-    alignItems: "center",
-    gap: 8,
-  },
-};

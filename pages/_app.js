@@ -1,13 +1,19 @@
 // /pages/_app.js
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Head from "next/head";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../styles/global.css";
 
+function applyTheme(next) {
+  if (typeof document === "undefined") return;
+  document.documentElement.setAttribute("data-theme", next);
+  document.documentElement.style.colorScheme = next;
+  document.body?.setAttribute("data-theme", next);
+}
+
 function MyApp({ Component, pageProps }) {
   const [theme, setTheme] = useState("light");
-  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem("morgan-theme");
@@ -17,16 +23,21 @@ function MyApp({ Component, pageProps }) {
         ? "dark"
         : "light");
     setTheme(preferred);
-    document.documentElement.setAttribute("data-theme", preferred);
-    setReady(true);
+    applyTheme(preferred);
   }, []);
 
-  function toggleTheme() {
-    const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
-    document.documentElement.setAttribute("data-theme", next);
-    localStorage.setItem("morgan-theme", next);
-  }
+  const toggleTheme = useCallback(() => {
+    setTheme((current) => {
+      const next = current === "dark" ? "light" : "dark";
+      applyTheme(next);
+      try {
+        localStorage.setItem("morgan-theme", next);
+      } catch (e) {
+        /* ignore */
+      }
+      return next;
+    });
+  }, []);
 
   return (
     <>
@@ -37,9 +48,9 @@ function MyApp({ Component, pageProps }) {
           content="Build a doable week of meals with Morgan — plans, shopping lists, and coaching."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content={theme === "dark" ? "#0f172a" : "#e0f2fe"} />
+        <meta name="theme-color" content={theme === "dark" ? "#0b1220" : "#e0f2fe"} />
       </Head>
-      <Navbar theme={theme} onToggleTheme={toggleTheme} themeReady={ready} />
+      <Navbar theme={theme} onToggleTheme={toggleTheme} />
       <Component {...pageProps} theme={theme} />
       <Footer />
     </>
