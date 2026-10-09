@@ -18,7 +18,7 @@ export default function PlannerForm({
 }) {
   return (
     <section style={styles.panel}>
-      <h2 style={styles.panelTitle}>Plan your meals</h2>
+      <h2 style={styles.panelTitle} className="panel-title-mobile">Plan your meals</h2>
 
       <div style={styles.presetWrap}>
         {presets.map((preset) => (
@@ -44,7 +44,7 @@ export default function PlannerForm({
           />
         </Field>
 
-        <div style={styles.twoCol}>
+        <div className="form-two-col">
           <Field label="Days">
             <input
               style={styles.input}
@@ -68,7 +68,7 @@ export default function PlannerForm({
           </Field>
         </div>
 
-        <div style={styles.twoCol}>
+        <div className="form-two-col">
           <Field label="Calories target">
             <input
               style={styles.input}
@@ -156,13 +156,13 @@ export default function PlannerForm({
 
 const styles = {
   panel: {
-  background: "rgba(255,255,255,0.82)",
-  backdropFilter: "blur(14px)",
-  border: "1px solid rgba(255,255,255,0.7)",
-  borderRadius: 28,
-  padding: 22,
-  boxShadow: "0 18px 50px rgba(15, 23, 42, 0.08)",
-},
+    background: "rgba(255,255,255,0.82)",
+    backdropFilter: "blur(14px)",
+    border: "1px solid rgba(255,255,255,0.7)",
+    borderRadius: 28,
+    padding: 22,
+    boxShadow: "0 18px 50px rgba(15, 23, 42, 0.08)",
+  },
   panelTitle: {
     marginTop: 0,
     marginBottom: 16,
@@ -188,11 +188,6 @@ const styles = {
     display: "grid",
     gap: 14,
   },
-  twoCol: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: 12,
-  },
   label: {
     display: "block",
     fontWeight: 700,
@@ -206,7 +201,7 @@ const styles = {
     padding: "12px 14px",
     borderRadius: 14,
     border: "1px solid #cbd5e1",
-    fontSize: 15,
+    fontSize: 16,
   },
   textarea: {
     width: "100%",
@@ -214,7 +209,7 @@ const styles = {
     padding: "12px 14px",
     borderRadius: 14,
     border: "1px solid #cbd5e1",
-    fontSize: 15,
+    fontSize: 16,
     minHeight: 92,
     resize: "vertical",
   },
@@ -228,6 +223,7 @@ const styles = {
     background: "linear-gradient(135deg, #0284c7 0%, #16a34a 100%)",
     color: "#ffffff",
     boxShadow: "0 10px 24px rgba(2, 132, 199, 0.2)",
+    width: "100%",
   },
   error: {
     margin: 0,

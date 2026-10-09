@@ -3,7 +3,7 @@ export default function MealPlanResults({ plan, onSave, savedMessage }) {
     <section style={styles.panel}>
       {!plan ? (
         <>
-          <h2 style={styles.title}>Your meal plan will appear here</h2>
+          <h2 style={styles.title} className="panel-title-mobile">Your meal plan will appear here</h2>
           <div style={styles.placeholderWrap}>
             <div style={styles.placeholder}>Breakfast, lunch, dinner, and snacks</div>
             <div style={styles.placeholder}>Prep tips for each day</div>
@@ -13,9 +13,9 @@ export default function MealPlanResults({ plan, onSave, savedMessage }) {
         </>
       ) : (
         <>
-          <div style={styles.headerRow}>
+          <div className="header-row">
             <div>
-              <h2 style={styles.title}>{plan.title || "Your Meal Plan"}</h2>
+              <h2 style={styles.title} className="panel-title-mobile">{plan.title || "Your Meal Plan"}</h2>
               {plan.summary ? <p style={styles.summary}>{plan.summary}</p> : null}
             </div>
 
@@ -46,13 +46,13 @@ export default function MealPlanResults({ plan, onSave, savedMessage }) {
 
 const styles = {
   panel: {
-  background: "rgba(255,255,255,0.82)",
-  backdropFilter: "blur(14px)",
-  border: "1px solid rgba(255,255,255,0.7)",
-  borderRadius: 28,
-  padding: 22,
-  boxShadow: "0 18px 50px rgba(15, 23, 42, 0.08)",
-},
+    background: "rgba(255,255,255,0.82)",
+    backdropFilter: "blur(14px)",
+    border: "1px solid rgba(255,255,255,0.7)",
+    borderRadius: 28,
+    padding: 22,
+    boxShadow: "0 18px 50px rgba(15, 23, 42, 0.08)",
+  },
   title: {
     marginTop: 0,
     marginBottom: 10,
@@ -74,13 +74,6 @@ const styles = {
     background: "#f8fafc",
     color: "#334155",
   },
-  headerRow: {
-    display: "flex",
-    justifyContent: "space-between",
-    gap: 16,
-    alignItems: "start",
-    marginBottom: 12,
-  },
   saveBtn: {
     border: "1px solid #cbd5e1",
     background: "#f8fafc",
@@ -88,6 +81,7 @@ const styles = {
     padding: "10px 14px",
     cursor: "pointer",
     fontWeight: 700,
+    flexShrink: 0,
   },
   saved: {
     color: "#15803d",

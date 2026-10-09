@@ -1,8 +1,7 @@
 // /pages/meal-plan.js
 import React from 'react';
-import Link from 'next/link'; 
+import Link from 'next/link';
 
-// ICON URLS: These are pointing to externally hosted images
 const BREAKFAST_ICON_URL = "https://img.icons8.com/material-outlined/32/breakfast.png";
 const LUNCH_ICON_URL = "https://img.icons8.com/material-outlined/32/lunch.png";
 const DINNER_ICON_URL = "https://img.icons8.com/material-outlined/32/dinner.png";
@@ -53,10 +52,8 @@ export default function MealPlan() {
         },
     ];
 
-    // NOTE: The shoppingList data object has been removed from this file.
-
     return (
-        <main style={{ padding: "2rem", maxWidth: "900px", margin: "0 auto" }}>
+        <main className="page-padding" style={{ maxWidth: "900px" }}>
 
             <h1
                 style={{
@@ -65,59 +62,58 @@ export default function MealPlan() {
                     color: "white",
                     padding: "1.2rem",
                     borderRadius: "12px",
-                    fontSize: "1.8rem",
+                    fontSize: "1.5rem",
                     marginBottom: "2rem",
+                    lineHeight: 1.3,
                 }}
             >
                 7-Day High-Protein, Low-Carb Meal Plan
             </h1>
 
-            {/* Meal Plan Days */}
             <div style={{ display: "grid", gap: "1.5rem" }}>
                 {days.map((d, index) => (
                     <div
                         key={index}
                         style={{
-                            padding: "1.5rem",
+                            padding: "1.25rem",
                             borderRadius: "10px",
                             background: "#f8faff",
                             borderLeft: "5px solid #1845AD",
                         }}
                     >
-                        <h2 style={{ color: "#1845AD", marginBottom: "1rem" }}>{d.day}</h2>
+                        <h2 style={{ color: "#1845AD", marginBottom: "1rem", fontSize: "1.25rem" }}>{d.day}</h2>
 
-                        <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "0.5rem" }}>
-                            <img src={BREAKFAST_ICON_URL} width="32" height="32" alt="Breakfast Icon" style={{ borderRadius: "50%" }} />
-                            <p><strong>Breakfast:</strong> {d.breakfast}</p>
+                        <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", marginBottom: "0.5rem" }}>
+                            <img src={BREAKFAST_ICON_URL} width="32" height="32" alt="Breakfast" style={{ borderRadius: "50%", flexShrink: 0 }} />
+                            <p style={{ margin: 0 }}><strong>Breakfast:</strong> {d.breakfast}</p>
                         </div>
 
-                        <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "0.5rem" }}>
-                            <img src={LUNCH_ICON_URL} width="32" height="32" alt="Lunch Icon" style={{ borderRadius: "50%" }} />
-                            <p><strong>Lunch:</strong> {d.lunch}</p>
+                        <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", marginBottom: "0.5rem" }}>
+                            <img src={LUNCH_ICON_URL} width="32" height="32" alt="Lunch" style={{ borderRadius: "50%", flexShrink: 0 }} />
+                            <p style={{ margin: 0 }}><strong>Lunch:</strong> {d.lunch}</p>
                         </div>
 
-                        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                            <img src={DINNER_ICON_URL} width="32" height="32" alt="Dinner Icon" style={{ borderRadius: "50%" }} />
-                            <p><strong>Dinner:</strong> {d.dinner}</p>
+                        <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+                            <img src={DINNER_ICON_URL} width="32" height="32" alt="Dinner" style={{ borderRadius: "50%", flexShrink: 0 }} />
+                            <p style={{ margin: 0 }}><strong>Dinner:</strong> {d.dinner}</p>
                         </div>
                     </div>
                 ))}
             </div>
 
-            {/* Dynamic Link to Shopping List (New Feature) */}
             <div style={{ textAlign: "center", marginTop: "3rem" }}>
-                <Link 
+                <Link
                     href="/shoplist"
                     style={{
-                        padding: "1rem 2rem",
-                        background: "#00b386", // Green color for Shopping
+                        padding: "1rem 1.5rem",
+                        background: "#00b386",
                         color: "white",
                         border: "none",
                         borderRadius: "10px",
                         cursor: "pointer",
-                        fontSize: "1.2rem",
-                        textDecoration: "none", // Remove underline from link
-                        display: "inline-block"
+                        fontSize: "1.1rem",
+                        textDecoration: "none",
+                        display: "inline-block",
                     }}
                 >
                     View Full Weekly Shopping List 🛒

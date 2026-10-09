@@ -68,10 +68,10 @@ export default function CoachChat({ plan }) {
 
   return (
     <section style={styles.panel}>
-      <div style={styles.header}>
+      <div className="header-row">
         <div>
           <div style={styles.eyebrow}>Morgan Coach</div>
-          <h2 style={styles.title}>Ask Morgan anything</h2>
+          <h2 style={styles.title} className="panel-title-mobile">Ask Morgan anything</h2>
           <p style={styles.sub}>
             Recipes, swaps, pantry ideas, grocery help, or a little motivation.
           </p>
@@ -108,7 +108,7 @@ export default function CoachChat({ plan }) {
         {loading ? <div style={styles.loading}>Morgan is thinking…</div> : null}
       </div>
 
-      <form onSubmit={sendMessage} style={styles.form}>
+      <form onSubmit={sendMessage} className="chat-form">
         <input
           style={styles.input}
           value={input}
@@ -131,13 +131,6 @@ const styles = {
     borderRadius: 28,
     padding: 22,
     boxShadow: "0 18px 50px rgba(15, 23, 42, 0.08)",
-  },
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    gap: 16,
-    alignItems: "center",
-    marginBottom: 14,
   },
   eyebrow: {
     fontSize: 12,
@@ -195,8 +188,9 @@ const styles = {
   msg: {
     padding: "12px 14px",
     borderRadius: 16,
-    maxWidth: "82%",
+    maxWidth: "90%",
     lineHeight: 1.45,
+    wordBreak: "break-word",
   },
   userMsg: {
     alignSelf: "flex-end",
@@ -213,16 +207,13 @@ const styles = {
     fontSize: 14,
     paddingLeft: 2,
   },
-  form: {
-    display: "flex",
-    gap: 10,
-  },
   input: {
     flex: 1,
+    minWidth: 0,
     padding: "12px 14px",
     borderRadius: 14,
     border: "1px solid #cbd5e1",
-    fontSize: 15,
+    fontSize: 16,
   },
   btn: {
     padding: "12px 16px",

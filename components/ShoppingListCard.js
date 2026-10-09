@@ -37,8 +37,8 @@ export default function ShoppingListCard({ shoppingList }) {
 
   return (
     <section style={styles.panel}>
-      <div style={styles.header}>
-        <h2 style={styles.title}>Shopping List</h2>
+      <div className="header-row">
+        <h2 style={styles.title} className="panel-title-mobile">Shopping List</h2>
         {shoppingList ? (
           <button type="button" onClick={copyList} style={styles.copyBtn}>
             Copy List
@@ -64,19 +64,12 @@ export default function ShoppingListCard({ shoppingList }) {
 
 const styles = {
   panel: {
-  background: "rgba(255,255,255,0.82)",
-  backdropFilter: "blur(14px)",
-  border: "1px solid rgba(255,255,255,0.7)",
-  borderRadius: 28,
-  padding: 22,
-  boxShadow: "0 18px 50px rgba(15, 23, 42, 0.08)",
-},
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: 12,
-    marginBottom: 10,
+    background: "rgba(255,255,255,0.82)",
+    backdropFilter: "blur(14px)",
+    border: "1px solid rgba(255,255,255,0.7)",
+    borderRadius: 28,
+    padding: 22,
+    boxShadow: "0 18px 50px rgba(15, 23, 42, 0.08)",
   },
   title: {
     margin: 0,
@@ -90,6 +83,7 @@ const styles = {
     padding: "10px 14px",
     cursor: "pointer",
     fontWeight: 700,
+    flexShrink: 0,
   },
   empty: {
     color: "#64748b",

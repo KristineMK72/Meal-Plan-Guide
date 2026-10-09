@@ -15,7 +15,7 @@ const styles = {
     overflow: "hidden",
     background:
       "radial-gradient(circle at top left, #e0f2fe 0%, transparent 28%), radial-gradient(circle at top right, #dcfce7 0%, transparent 24%), linear-gradient(180deg, #f8fbff 0%, #eef8ff 45%, #f6fffb 100%)",
-    padding: "28px 16px 56px",
+    padding: "16px 12px 56px",
     fontFamily: "Arial, sans-serif",
   },
   shell: {
@@ -23,6 +23,7 @@ const styles = {
     margin: "0 auto",
     position: "relative",
     zIndex: 2,
+    width: "100%",
   },
   bgGlowOne: {
     position: "absolute",

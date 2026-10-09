@@ -103,11 +103,11 @@ export default function Home() {
 
   return (
     <AppShell>
-      <section style={styles.hero}>
+      <section className="hero-grid">
         <div style={styles.heroMain}>
           <div style={styles.heroBadge}>Morgan Meal Coach</div>
 
-          <h1 style={styles.heroTitle}>
+          <h1 style={styles.heroTitle} className="hero-title-mobile">
             Build a week that feels
             <span style={styles.heroAccent}> strong, smart, and actually doable.</span>
           </h1>
@@ -122,7 +122,7 @@ export default function Home() {
             “You do not need a perfect week. You need a week you can actually live through.”
           </div>
 
-          <div style={styles.heroStats}>
+          <div className="hero-stats">
             <div style={styles.statCard}>
               <div style={styles.statNumber}>7-day</div>
               <div style={styles.statLabel}>meal planning</div>
@@ -140,7 +140,7 @@ export default function Home() {
 
         <div style={styles.heroSide}>
           <div style={styles.morganOrb}>M</div>
-          <h2 style={styles.sideTitle}>Meet Morgan</h2>
+          <h2 style={styles.sideTitle} className="side-title-mobile">Meet Morgan</h2>
           <p style={styles.sideText}>
             Calm. Practical. Slightly witty. Built to help you plan meals, shop
             smarter, and keep going when real life gets messy.
@@ -155,7 +155,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section style={styles.grid}>
+      <section className="content-grid">
         <div style={styles.leftRail}>
           <PlannerForm
             form={form}
@@ -193,20 +193,12 @@ export default function Home() {
 }
 
 const styles = {
-  hero: {
-    display: "grid",
-    gridTemplateColumns: "1.35fr 0.82fr",
-    gap: 24,
-    marginBottom: 28,
-    alignItems: "stretch",
-  },
-
   heroMain: {
     background: "rgba(15, 23, 42, 0.68)",
     backdropFilter: "blur(18px)",
     border: "1px solid rgba(255,255,255,0.08)",
     borderRadius: 30,
-    padding: 32,
+    padding: 24,
     boxShadow: "0 24px 70px rgba(0,0,0,0.28)",
   },
 
@@ -215,7 +207,7 @@ const styles = {
     backdropFilter: "blur(18px)",
     border: "1px solid rgba(255,255,255,0.08)",
     borderRadius: 30,
-    padding: 28,
+    padding: 24,
     boxShadow: "0 24px 70px rgba(0,0,0,0.28)",
     display: "flex",
     flexDirection: "column",
@@ -266,13 +258,6 @@ const styles = {
     border: "1px solid rgba(56, 189, 248, 0.18)",
     color: "#e0f2fe",
     fontWeight: 600,
-  },
-
-  heroStats: {
-    display: "grid",
-    gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-    gap: 14,
-    marginTop: 24,
   },
 
   statCard: {
@@ -332,13 +317,6 @@ const styles = {
     background: "rgba(255,255,255,0.04)",
     border: "1px solid rgba(255,255,255,0.06)",
     color: "#e2e8f0",
-  },
-
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "420px 1fr",
-    gap: 24,
-    alignItems: "start",
   },
 
   leftRail: {

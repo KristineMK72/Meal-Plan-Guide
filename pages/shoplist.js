@@ -1,31 +1,29 @@
-// /pages/shoplist.js (FINAL, CORRECTED VERSION)
+// /pages/shoplist.js
 import React from 'react';
 
-// Shopping List Data (High-Protein/Low-Carb)
 const highProteinList = {
     Proteins: [
-        "Chicken breasts/thighs", "Salmon & Cod", "Lean ground beef/turkey", 
+        "Chicken breasts/thighs", "Salmon & Cod", "Lean ground beef/turkey",
         "Shrimp", "Eggs, Canned tuna", "Cottage cheese, Greek yogurt", "Protein powder",
     ],
     Vegetables: [
-        "Asparagus & Broccoli", "Spinach & Romaine", "Green beans", 
+        "Asparagus & Broccoli", "Spinach & Romaine", "Green beans",
         "Brussels sprouts", "Zucchini & Mushrooms", "Avocados",
     ],
     Fruits: ["Mixed Berries (low-carb)"],
     Pantry: [
-        "Olive oil, Mayo", "Chia seeds", "Almonds & Walnuts", 
+        "Olive oil, Mayo", "Chia seeds", "Almonds & Walnuts",
         "Low-carb salsa/marinara", "Seasonings",
     ],
 };
 
-// NEW Shopping List Data (MIND/Anti-Inflammatory)
 const mindDietList = {
     "Brain Boosters": [
         "Oily Fish (Salmon, Tuna, Mackerel)", "Blueberries & Strawberries",
         "Walnuts, Pecans, Almonds", "Dark Chocolate (70%+ cacao)",
     ],
     "Greens & Oils": [
-        "Kale, Spinach, Collard Greens", "Broccoli, Cauliflower", 
+        "Kale, Spinach, Collard Greens", "Broccoli, Cauliflower",
         "Extra Virgin Olive Oil", "Avocado Oil",
     ],
     "Grains & Pulses": [
@@ -36,8 +34,6 @@ const mindDietList = {
     ],
 };
 
-
-// Component to render a single shopping list card
 const ShoppingListCard = ({ category, items, color }) => (
     <div
         style={{
@@ -47,7 +43,7 @@ const ShoppingListCard = ({ category, items, color }) => (
             boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
         }}
     >
-        <h3 style={{ color: "#333", borderBottom: "2px solid #ccc", paddingBottom: "0.5rem" }}>{category}</h3>
+        <h3 style={{ color: "#333", borderBottom: "2px solid #ccc", paddingBottom: "0.5rem", marginTop: 0 }}>{category}</h3>
         <ul style={{ listStyle: "none", paddingLeft: "0", marginTop: "0.5rem" }}>
             {items.map((item, i) => (
                 <li key={i} style={{ marginBottom: "0.3rem" }}>
@@ -58,10 +54,9 @@ const ShoppingListCard = ({ category, items, color }) => (
     </div>
 );
 
-
 export default function ShopList() {
     return (
-        <main style={{ padding: "2rem", maxWidth: "1000px", margin: "0 auto" }}>
+        <main className="page-padding">
 
             <h1
                 style={{
@@ -70,29 +65,26 @@ export default function ShopList() {
                     color: "white",
                     padding: "1.2rem",
                     borderRadius: "12px",
-                    fontSize: "1.8rem",
+                    fontSize: "1.5rem",
                     marginBottom: "2rem",
+                    lineHeight: 1.3,
                 }}
             >
                 🛒 Your Weekly Shopping Lists
             </h1>
 
-            {/* High-Protein/Low-Carb List */}
-            <h2 style={{ color: "#1845AD", textAlign: "center", borderBottom: '2px solid #ccc', paddingBottom: '0.5rem', marginTop: '3rem' }}>
+            <h2 style={{ color: "#1845AD", textAlign: "center", borderBottom: '2px solid #ccc', paddingBottom: '0.5rem', marginTop: '2rem', fontSize: '1.25rem' }}>
                 High-Protein / Low-Carb List
             </h2>
-            {/* Uses responsive CSS class defined in global.css */}
-            <div className="main-grid"> 
+            <div className="main-grid">
                 {Object.entries(highProteinList).map(([category, items], idx) => (
                     <ShoppingListCard key={idx} category={category} items={items} color="#eef2ff" />
                 ))}
             </div>
 
-            {/* MIND Diet List */}
-            <h2 style={{ color: "#8460F0", textAlign: "center", borderBottom: '2px solid #ccc', paddingBottom: '0.5rem', marginTop: '3rem' }}>
+            <h2 style={{ color: "#8460F0", textAlign: "center", borderBottom: '2px solid #ccc', paddingBottom: '0.5rem', marginTop: '3rem', fontSize: '1.25rem' }}>
                 MIND Diet (Mental Health) List
             </h2>
-            {/* Uses responsive CSS class defined in global.css */}
             <div className="main-grid">
                 {Object.entries(mindDietList).map(([category, items], idx) => (
                     <ShoppingListCard key={idx} category={category} items={items} color="#f0e9ff" />
