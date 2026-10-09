@@ -1,4 +1,4 @@
-/* /styles/global.css — mobile-first responsive styles */
+/* /styles/global.css — responsive for portrait + landscape */
 
 *,
 *::before,
@@ -27,7 +27,7 @@ img {
 .main-grid {
   display: grid;
   gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
 }
 
 .two-col-grid {
@@ -47,7 +47,7 @@ img {
 
 .content-grid {
   display: grid;
-  grid-template-columns: 420px 1fr;
+  grid-template-columns: minmax(280px, 420px) 1fr;
   gap: 24px;
   align-items: start;
 }
@@ -110,6 +110,13 @@ img {
   gap: 10px;
 }
 
+.navbar-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
 .navbar-links {
   display: flex;
   gap: 18px;
@@ -152,8 +159,10 @@ img {
   margin: 0 auto;
 }
 
-/* --- MOBILE BREAKPOINT --- */
-@media (max-width: 900px) {
+/* ============================================
+   PORTRAIT — tall screens (phones upright)
+   ============================================ */
+@media (orientation: portrait) and (max-width: 900px) {
   .hero-grid {
     grid-template-columns: 1fr;
   }
@@ -167,7 +176,7 @@ img {
   }
 }
 
-@media (max-width: 768px) {
+@media (orientation: portrait) and (max-width: 768px) {
   .main-grid,
   .two-col-grid {
     grid-template-columns: 1fr;
@@ -185,9 +194,6 @@ img {
   }
 
   .navbar-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     width: 100%;
   }
 
@@ -229,7 +235,6 @@ img {
     width: 100%;
   }
 
-  /* Scale down large hero titles on small screens */
   .hero-title-mobile {
     font-size: 32px !important;
     line-height: 1.15 !important;
@@ -244,8 +249,234 @@ img {
   }
 }
 
-@media (max-width: 480px) {
+@media (orientation: portrait) and (max-width: 480px) {
   .hero-title-mobile {
     font-size: 26px !important;
+  }
+
+  .page-padding {
+    padding: 0.75rem;
+  }
+}
+
+/* ============================================
+   LANDSCAPE — wide/short screens (phones sideways,
+   tablets, small laptops in landscape)
+   ============================================ */
+
+/* Phone landscape: still narrow height, but more width */
+@media (orientation: landscape) and (max-height: 500px) {
+  .navbar {
+    padding: 8px 16px;
+    margin-bottom: 12px;
+  }
+
+  .navbar-toggle {
+    display: none;
+  }
+
+  .navbar-links {
+    display: flex !important;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: auto;
+    padding-top: 0;
+  }
+
+  .navbar-link {
+    padding: 4px 8px;
+    font-size: 13px;
+  }
+
+  .page-padding {
+    padding: 0.75rem 1.25rem;
+  }
+
+  .hero-title-mobile {
+    font-size: 28px !important;
+    line-height: 1.15 !important;
+  }
+
+  .side-title-mobile {
+    font-size: 22px !important;
+  }
+
+  .panel-title-mobile {
+    font-size: 20px !important;
+  }
+}
+
+/* Landscape with enough width: keep multi-column where useful */
+@media (orientation: landscape) and (min-width: 640px) and (max-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1.2fr 0.9fr;
+    gap: 16px;
+  }
+
+  .content-grid {
+    grid-template-columns: minmax(260px, 360px) 1fr;
+    gap: 16px;
+  }
+
+  .hero-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .form-two-col {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .two-col-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .main-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+  }
+
+  .navbar {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .navbar-toggle {
+    display: none;
+  }
+
+  .navbar-links {
+    display: flex !important;
+    flex-direction: row;
+    width: auto;
+    padding-top: 0;
+  }
+}
+
+/* Very narrow landscape (e.g. older phones sideways) */
+@media (orientation: landscape) and (max-width: 639px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .form-two-col {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .main-grid,
+  .two-col-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .navbar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 8px 12px;
+  }
+
+  .navbar-toggle {
+    display: none;
+  }
+
+  .navbar-links {
+    display: flex !important;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+    width: auto;
+    padding-top: 0;
+  }
+
+  .header-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .chat-form {
+    flex-direction: row;
+  }
+
+  .chat-form button {
+    width: auto;
+  }
+}
+
+/* Desktop / large screens — always multi-column regardless of orientation */
+@media (min-width: 1025px) {
+  .hero-grid {
+    grid-template-columns: 1.35fr 0.82fr;
+  }
+
+  .content-grid {
+    grid-template-columns: minmax(280px, 420px) 1fr;
+  }
+
+  .hero-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .form-two-col {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .navbar-toggle {
+    display: none;
+  }
+
+  .navbar-links {
+    display: flex !important;
+    flex-direction: row;
+  }
+}
+
+/* Fallback for browsers that don't report orientation well:
+   width-based rules still apply when orientation media is unsupported */
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-grid,
+  .two-col-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Landscape overrides the single-column fallback when width allows */
+@media (orientation: landscape) and (min-width: 640px) {
+  .hero-grid {
+    grid-template-columns: 1.2fr 0.9fr;
+  }
+
+  .content-grid {
+    grid-template-columns: minmax(260px, 360px) 1fr;
+  }
+
+  .form-two-col {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .two-col-grid {
+    grid-template-columns: 1fr 1fr;
   }
 }
