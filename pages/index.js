@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AppShell from "../components/AppShell";
 import PlannerForm from "../components/PlannerForm";
 import MealPlanResults from "../components/MealPlanResults";
@@ -13,6 +13,14 @@ const presets = [
   "low-carb",
   "brain-friendly meals",
   "muscle gain",
+];
+
+const tips = [
+  "Repeating a few good meals is not boring. It is strategy in a nice outfit.",
+  "A perfect week is optional. A doable week is everything.",
+  "Shop your pantry first — your future self will thank you.",
+  "Prep once, eat twice. Leftovers are a love language.",
+  "Protein at breakfast makes the rest of the day easier.",
 ];
 
 export default function Home() {
@@ -33,6 +41,24 @@ export default function Home() {
   const [plan, setPlan] = useState(null);
   const [error, setError] = useState("");
   const [savedMessage, setSavedMessage] = useState("");
+  const [tipIndex, setTipIndex] = useState(0);
+  const [savedCount, setSavedCount] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setTipIndex((i) => (i + 1) % tips.length);
+    }, 6000);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    try {
+      const existing = JSON.parse(localStorage.getItem("savedMealPlans") || "[]");
+      setSavedCount(existing.length);
+    } catch {
+      setSavedCount(0);
+    }
+  }, [savedMessage]);
 
   function updateField(e) {
     const { name, value } = e.target;
@@ -49,6 +75,14 @@ export default function Home() {
     setError("");
     setPlan(null);
     setSavedMessage("");
+
+    // Scroll to results area so mobile users see progress
+    setTimeout(() => {
+      document.getElementById("meal-results")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 100);
 
     try {
       const res = await fetch("/api/meal-coach", {
@@ -96,6 +130,7 @@ export default function Home() {
       ];
       localStorage.setItem("savedMealPlans", JSON.stringify(next));
       setSavedMessage("Morgan saved this plan on your device.");
+      setSavedCount(next.length);
     } catch {
       setSavedMessage("Could not save this plan.");
     }
@@ -103,13 +138,16 @@ export default function Home() {
 
   return (
     <AppShell>
-      <section className="hero-grid">
-        <div style={styles.heroMain}>
+      <section className="hero-grid animate-in">
+        <div style={styles.heroMain} className="glass-dark">
           <div style={styles.heroBadge}>Morgan Meal Coach</div>
 
           <h1 style={styles.heroTitle} className="hero-title-mobile">
             Build a week that feels
-            <span style={styles.heroAccent}> strong, smart, and actually doable.</span>
+            <span style={styles.heroAccent}>
+              {" "}
+              strong, smart, and actually doable.
+            </span>
           </h1>
 
           <p style={styles.heroText}>
@@ -119,7 +157,8 @@ export default function Home() {
           </p>
 
           <div style={styles.heroQuote}>
-            “You do not need a perfect week. You need a week you can actually live through.”
+            “You do not need a perfect week. You need a week you can actually live
+            through.”
           </div>
 
           <div className="hero-stats">
@@ -132,15 +171,23 @@ export default function Home() {
               <div style={styles.statLabel}>shopping lists</div>
             </div>
             <div style={styles.statCard}>
-              <div style={styles.statNumber}>Morgan</div>
-              <div style={styles.statLabel}>recipes + coaching</div>
+              <div style={styles.statNumber}>
+                {savedCount > 0 ? savedCount : "Morgan"}
+              </div>
+              <div style={styles.statLabel}>
+                {savedCount > 0 ? "plans saved here" : "recipes + coaching"}
+              </div>
             </div>
           </div>
         </div>
 
-        <div style={styles.heroSide}>
-          <div style={styles.morganOrb}>M</div>
-          <h2 style={styles.sideTitle} className="side-title-mobile">Meet Morgan</h2>
+        <div style={styles.heroSide} className="glass-dark animate-in animate-in-delay-1">
+          <div style={styles.morganOrb} className="morgan-orb-live">
+            M
+          </div>
+          <h2 style={styles.sideTitle} className="side-title-mobile">
+            Meet Morgan
+          </h2>
           <p style={styles.sideText}>
             Calm. Practical. Slightly witty. Built to help you plan meals, shop
             smarter, and keep going when real life gets messy.
@@ -167,10 +214,10 @@ export default function Home() {
             onSubmit={generatePlan}
           />
 
-          <div style={styles.morganTipCard}>
+          <div style={styles.morganTipCard} className="glass-dark animate-in animate-in-delay-2">
             <div style={styles.tipEyebrow}>Morgan says</div>
-            <p style={styles.tipText}>
-              Repeating a few good meals is not boring. It is strategy in a nice outfit.
+            <p style={styles.tipText} key={tipIndex}>
+              {tips[tipIndex]}
             </p>
           </div>
         </div>
@@ -178,6 +225,7 @@ export default function Home() {
         <div style={styles.rightColumn}>
           <MealPlanResults
             plan={plan}
+            loading={loading}
             onSave={savePlan}
             savedMessage={savedMessage}
           />
@@ -194,26 +242,14 @@ export default function Home() {
 
 const styles = {
   heroMain: {
-    background: "rgba(15, 23, 42, 0.68)",
-    backdropFilter: "blur(18px)",
-    border: "1px solid rgba(255,255,255,0.08)",
-    borderRadius: 30,
     padding: 24,
-    boxShadow: "0 24px 70px rgba(0,0,0,0.28)",
   },
-
   heroSide: {
-    background: "rgba(15, 23, 42, 0.76)",
-    backdropFilter: "blur(18px)",
-    border: "1px solid rgba(255,255,255,0.08)",
-    borderRadius: 30,
     padding: 24,
-    boxShadow: "0 24px 70px rgba(0,0,0,0.28)",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
   },
-
   heroBadge: {
     display: "inline-block",
     marginBottom: 14,
@@ -227,7 +263,6 @@ const styles = {
     letterSpacing: "0.08em",
     textTransform: "uppercase",
   },
-
   heroTitle: {
     margin: "0 0 14px 0",
     fontSize: 54,
@@ -235,12 +270,10 @@ const styles = {
     color: "#f8fafc",
     maxWidth: 780,
   },
-
   heroAccent: {
     display: "block",
     color: "#86efac",
   },
-
   heroText: {
     margin: 0,
     fontSize: 18,
@@ -248,7 +281,6 @@ const styles = {
     color: "#cbd5e1",
     maxWidth: 760,
   },
-
   heroQuote: {
     marginTop: 20,
     display: "inline-block",
@@ -259,26 +291,22 @@ const styles = {
     color: "#e0f2fe",
     fontWeight: 600,
   },
-
   statCard: {
     borderRadius: 20,
     padding: 16,
     background: "rgba(255,255,255,0.04)",
     border: "1px solid rgba(255,255,255,0.06)",
   },
-
   statNumber: {
     color: "#f8fafc",
     fontSize: 22,
     fontWeight: 800,
     marginBottom: 4,
   },
-
   statLabel: {
     color: "#94a3b8",
     fontSize: 14,
   },
-
   morganOrb: {
     width: 76,
     height: 76,
@@ -289,28 +317,23 @@ const styles = {
     fontWeight: 800,
     color: "#ffffff",
     background: "linear-gradient(135deg, #0ea5e9 0%, #22c55e 100%)",
-    boxShadow: "0 18px 34px rgba(14,165,233,0.28)",
     marginBottom: 18,
   },
-
   sideTitle: {
     margin: "0 0 10px 0",
     color: "#f8fafc",
     fontSize: 32,
   },
-
   sideText: {
     margin: 0,
     color: "#cbd5e1",
     lineHeight: 1.65,
   },
-
   sideList: {
     display: "grid",
     gap: 10,
     marginTop: 18,
   },
-
   sideItem: {
     padding: "12px 14px",
     borderRadius: 16,
@@ -318,28 +341,19 @@ const styles = {
     border: "1px solid rgba(255,255,255,0.06)",
     color: "#e2e8f0",
   },
-
   leftRail: {
     display: "grid",
     gap: 18,
     alignSelf: "start",
   },
-
   rightColumn: {
     display: "grid",
     gap: 22,
     alignSelf: "start",
   },
-
   morganTipCard: {
-    background: "rgba(15, 23, 42, 0.7)",
-    backdropFilter: "blur(18px)",
-    border: "1px solid rgba(255,255,255,0.08)",
-    borderRadius: 24,
     padding: 18,
-    boxShadow: "0 18px 50px rgba(0,0,0,0.24)",
   },
-
   tipEyebrow: {
     fontSize: 12,
     fontWeight: 800,
@@ -348,13 +362,12 @@ const styles = {
     color: "#7dd3fc",
     marginBottom: 8,
   },
-
   tipText: {
     margin: 0,
     color: "#dbeafe",
     lineHeight: 1.55,
+    animation: "fadeIn 0.4s ease",
   },
-
   chatSection: {
     marginTop: 28,
   },

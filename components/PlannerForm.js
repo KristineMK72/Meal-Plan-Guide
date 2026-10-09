@@ -17,8 +17,10 @@ export default function PlannerForm({
   onSubmit,
 }) {
   return (
-    <section style={styles.panel}>
-      <h2 style={styles.panelTitle} className="panel-title-mobile">Plan your meals</h2>
+    <section className="glass-panel animate-in">
+      <h2 style={styles.panelTitle} className="panel-title-mobile">
+        Plan your meals
+      </h2>
 
       <div style={styles.presetWrap}>
         {presets.map((preset) => (
@@ -26,7 +28,7 @@ export default function PlannerForm({
             key={preset}
             type="button"
             onClick={() => applyPreset(preset)}
-            style={styles.presetBtn}
+            className={`preset-btn${form.goal === preset ? " active" : ""}`}
           >
             {preset}
           </button>
@@ -140,8 +142,20 @@ export default function PlannerForm({
           />
         </Field>
 
-        <button type="submit" disabled={loading} style={styles.submitBtn}>
-          {loading ? "Generating..." : "Generate meal + shopping plan"}
+        <button
+          type="submit"
+          disabled={loading}
+          className="action-btn action-btn-primary"
+          style={styles.submitBtn}
+        >
+          {loading ? (
+            <>
+              <span className="loading-spinner" aria-hidden="true" />
+              Morgan is cooking up your plan…
+            </>
+          ) : (
+            "Generate meal + shopping plan ✨"
+          )}
         </button>
 
         {error ? <p style={styles.error}>{error}</p> : null}
@@ -155,14 +169,6 @@ export default function PlannerForm({
 }
 
 const styles = {
-  panel: {
-    background: "rgba(255,255,255,0.82)",
-    backdropFilter: "blur(14px)",
-    border: "1px solid rgba(255,255,255,0.7)",
-    borderRadius: 28,
-    padding: 22,
-    boxShadow: "0 18px 50px rgba(15, 23, 42, 0.08)",
-  },
   panelTitle: {
     marginTop: 0,
     marginBottom: 16,
@@ -174,15 +180,6 @@ const styles = {
     flexWrap: "wrap",
     gap: 10,
     marginBottom: 18,
-  },
-  presetBtn: {
-    border: "1px solid #bfdbfe",
-    background: "#eff6ff",
-    color: "#1d4ed8",
-    borderRadius: 999,
-    padding: "8px 12px",
-    fontSize: 14,
-    cursor: "pointer",
   },
   form: {
     display: "grid",
@@ -202,6 +199,7 @@ const styles = {
     borderRadius: 14,
     border: "1px solid #cbd5e1",
     fontSize: 16,
+    transition: "border-color 0.15s ease, box-shadow 0.15s ease",
   },
   textarea: {
     width: "100%",
@@ -214,16 +212,10 @@ const styles = {
     resize: "vertical",
   },
   submitBtn: {
-    border: "none",
-    borderRadius: 16,
+    width: "100%",
     padding: "14px 18px",
     fontSize: 16,
-    fontWeight: 700,
-    cursor: "pointer",
-    background: "linear-gradient(135deg, #0284c7 0%, #16a34a 100%)",
-    color: "#ffffff",
-    boxShadow: "0 10px 24px rgba(2, 132, 199, 0.2)",
-    width: "100%",
+    borderRadius: 16,
   },
   error: {
     margin: 0,

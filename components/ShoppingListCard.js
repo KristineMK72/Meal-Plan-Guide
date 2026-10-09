@@ -1,21 +1,45 @@
-function Group({ title, items }) {
+import { useEffect, useState } from "react";
+
+function Group({ title, items, checked, onToggle }) {
   if (!items || !items.length) return null;
 
   return (
     <div style={styles.group}>
       <h3 style={styles.groupTitle}>{title}</h3>
-      <ul style={styles.ul}>
-        {items.map((item, idx) => (
-          <li key={`${title}-${idx}`} style={styles.li}>
-            {item}
-          </li>
-        ))}
-      </ul>
+      <div>
+        {items.map((item, idx) => {
+          const key = `${title}-${idx}`;
+          const isChecked = !!checked[key];
+          return (
+            <label
+              key={key}
+              className={`shop-item${isChecked ? " checked" : ""}`}
+            >
+              <input
+                type="checkbox"
+                checked={isChecked}
+                onChange={() => onToggle(key)}
+              />
+              <span className="shop-item-text">{item}</span>
+            </label>
+          );
+        })}
+      </div>
     </div>
   );
 }
 
 export default function ShoppingListCard({ shoppingList }) {
+  const [checked, setChecked] = useState({});
+
+  useEffect(() => {
+    setChecked({});
+  }, [shoppingList]);
+
+  function onToggle(key) {
+    setChecked((prev) => ({ ...prev, [key]: !prev[key] }));
+  }
+
   async function copyList() {
     if (!shoppingList) return;
 
@@ -35,27 +59,84 @@ export default function ShoppingListCard({ shoppingList }) {
     }
   }
 
+  const totalItems = shoppingList
+    ? Object.values(shoppingList).reduce((n, arr) => n + (arr?.length || 0), 0)
+    : 0;
+  const checkedCount = Object.values(checked).filter(Boolean).length;
+
   return (
-    <section style={styles.panel}>
+    <section className="glass-panel animate-in animate-in-delay-2">
       <div className="header-row">
-        <h2 style={styles.title} className="panel-title-mobile">Shopping List</h2>
+        <div>
+          <h2 style={styles.title} className="panel-title-mobile">
+            Shopping List
+          </h2>
+          {shoppingList ? (
+            <p style={styles.progress}>
+              {checkedCount} of {totalItems} checked off
+            </p>
+          ) : null}
+        </div>
         {shoppingList ? (
-          <button type="button" onClick={copyList} style={styles.copyBtn}>
-            Copy List
+          <button type="button" onClick={copyList} className="action-btn">
+            📋 Copy List
           </button>
         ) : null}
       </div>
 
       {!shoppingList ? (
-        <p style={styles.empty}>Your grocery list will show up here after you generate a plan.</p>
+        <p style={styles.empty}>
+          Your grocery list will show up here after you generate a plan. Check
+          items off as you shop.
+        </p>
       ) : (
         <>
-          <Group title="Proteins" items={shoppingList.proteins} />
-          <Group title="Vegetables" items={shoppingList.vegetables} />
-          <Group title="Fruits" items={shoppingList.fruits} />
-          <Group title="Grains & Starches" items={shoppingList.grains_and_starches} />
-          <Group title="Dairy / Alternatives" items={shoppingList.dairy_or_alternatives} />
-          <Group title="Pantry" items={shoppingList.pantry} />
+          {totalItems > 0 ? (
+            <div style={styles.barTrack}>
+              <div
+                style={{
+                  ...styles.barFill,
+                  width: `${Math.round((checkedCount / totalItems) * 100)}%`,
+                }}
+              />
+            </div>
+          ) : null}
+          <Group
+            title="Proteins"
+            items={shoppingList.proteins}
+            checked={checked}
+            onToggle={onToggle}
+          />
+          <Group
+            title="Vegetables"
+            items={shoppingList.vegetables}
+            checked={checked}
+            onToggle={onToggle}
+          />
+          <Group
+            title="Fruits"
+            items={shoppingList.fruits}
+            checked={checked}
+            onToggle={onToggle}
+          />
+          <Group
+            title="Grains & Starches"
+            items={shoppingList.grains_and_starches}
+            checked={checked}
+            onToggle={onToggle}
+          />
+          <Group
+            title="Dairy / Alternatives"
+            items={shoppingList.dairy_or_alternatives}
+            checked={checked}
+            onToggle={onToggle}
+          />
+          <Group
+            title="Pantry"
+            items={shoppingList.pantry}
+            checked={checked}
+            onToggle={onToggle}
+          />
         </>
       )}
     </section>
@@ -63,31 +144,32 @@ export default function ShoppingListCard({ shoppingList }) {
 }
 
 const styles = {
-  panel: {
-    background: "rgba(255,255,255,0.82)",
-    backdropFilter: "blur(14px)",
-    border: "1px solid rgba(255,255,255,0.7)",
-    borderRadius: 28,
-    padding: 22,
-    boxShadow: "0 18px 50px rgba(15, 23, 42, 0.08)",
-  },
   title: {
     margin: 0,
     fontSize: 28,
     color: "#0f172a",
   },
-  copyBtn: {
-    border: "1px solid #cbd5e1",
-    background: "#f8fafc",
-    borderRadius: 12,
-    padding: "10px 14px",
-    cursor: "pointer",
-    fontWeight: 700,
-    flexShrink: 0,
+  progress: {
+    margin: "6px 0 0",
+    fontSize: 13,
+    color: "#64748b",
   },
   empty: {
     color: "#64748b",
     marginBottom: 0,
+  },
+  barTrack: {
+    height: 8,
+    borderRadius: 999,
+    background: "#e2e8f0",
+    overflow: "hidden",
+    marginBottom: 14,
+  },
+  barFill: {
+    height: "100%",
+    borderRadius: 999,
+    background: "linear-gradient(90deg, #0284c7, #16a34a)",
+    transition: "width 0.25s ease",
   },
   group: {
     border: "1px solid #e2e8f0",
@@ -101,13 +183,5 @@ const styles = {
     marginBottom: 8,
     fontSize: 18,
     color: "#0f172a",
-  },
-  ul: {
-    margin: 0,
-    paddingLeft: 18,
-  },
-  li: {
-    marginBottom: 6,
-    color: "#334155",
   },
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const starters = [
   "Give me a cheap high-protein dinner",
@@ -17,6 +17,11 @@ export default function CoachChat({ plan }) {
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const bottomRef = useRef(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, loading]);
 
   async function sendRawMessage(text) {
     if (!text.trim()) return;
@@ -67,16 +72,20 @@ export default function CoachChat({ plan }) {
   }
 
   return (
-    <section style={styles.panel}>
+    <section className="glass-panel animate-in animate-in-delay-3">
       <div className="header-row">
         <div>
           <div style={styles.eyebrow}>Morgan Coach</div>
-          <h2 style={styles.title} className="panel-title-mobile">Ask Morgan anything</h2>
+          <h2 style={styles.title} className="panel-title-mobile">
+            Ask Morgan anything
+          </h2>
           <p style={styles.sub}>
             Recipes, swaps, pantry ideas, grocery help, or a little motivation.
           </p>
         </div>
-        <div style={styles.avatar}>M</div>
+        <div style={styles.avatar} className="morgan-orb-live">
+          M
+        </div>
       </div>
 
       <div style={styles.starters}>
@@ -84,7 +93,7 @@ export default function CoachChat({ plan }) {
           <button
             key={item}
             type="button"
-            style={styles.starterBtn}
+            className="preset-btn"
             onClick={() => sendRawMessage(item)}
             disabled={loading}
           >
@@ -105,7 +114,17 @@ export default function CoachChat({ plan }) {
             {msg.text}
           </div>
         ))}
-        {loading ? <div style={styles.loading}>Morgan is thinking…</div> : null}
+        {loading ? (
+          <div style={styles.loading}>
+            <span className="typing-dots" aria-label="Morgan is typing">
+              <span />
+              <span />
+              <span />
+            </span>{" "}
+            Morgan is thinking…
+          </div>
+        ) : null}
+        <div ref={bottomRef} />
       </div>
 
       <form onSubmit={sendMessage} className="chat-form">
@@ -114,8 +133,13 @@ export default function CoachChat({ plan }) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Ask for a recipe, a swap, or a smarter grocery plan..."
+          aria-label="Message Morgan"
         />
-        <button style={styles.btn} disabled={loading}>
+        <button
+          className="action-btn action-btn-primary"
+          style={styles.btn}
+          disabled={loading}
+        >
           Send
         </button>
       </form>
@@ -124,14 +148,6 @@ export default function CoachChat({ plan }) {
 }
 
 const styles = {
-  panel: {
-    background: "rgba(255,255,255,0.82)",
-    backdropFilter: "blur(14px)",
-    border: "1px solid rgba(255,255,255,0.7)",
-    borderRadius: 28,
-    padding: 22,
-    boxShadow: "0 18px 50px rgba(15, 23, 42, 0.08)",
-  },
   eyebrow: {
     fontSize: 12,
     fontWeight: 700,
@@ -158,7 +174,6 @@ const styles = {
     fontWeight: 800,
     color: "#fff",
     background: "linear-gradient(135deg, #0ea5e9 0%, #22c55e 100%)",
-    boxShadow: "0 12px 24px rgba(14,165,233,0.28)",
     flexShrink: 0,
   },
   starters: {
@@ -166,15 +181,6 @@ const styles = {
     flexWrap: "wrap",
     gap: 10,
     marginBottom: 14,
-  },
-  starterBtn: {
-    border: "1px solid #dbeafe",
-    background: "#f8fbff",
-    color: "#1e3a8a",
-    borderRadius: 999,
-    padding: "8px 12px",
-    fontSize: 13,
-    cursor: "pointer",
   },
   chatBox: {
     display: "flex",
@@ -206,6 +212,9 @@ const styles = {
     color: "#64748b",
     fontSize: 14,
     paddingLeft: 2,
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
   },
   input: {
     flex: 1,
@@ -218,10 +227,5 @@ const styles = {
   btn: {
     padding: "12px 16px",
     borderRadius: 14,
-    border: "none",
-    background: "linear-gradient(135deg, #0284c7 0%, #16a34a 100%)",
-    color: "#fff",
-    cursor: "pointer",
-    fontWeight: 700,
   },
 };

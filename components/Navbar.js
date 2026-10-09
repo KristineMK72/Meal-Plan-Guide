@@ -1,17 +1,31 @@
 // /components/Navbar.js
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+
+const links = [
+  { href: "/", label: "Plan" },
+  { href: "/meal-plan", label: "Meals" },
+  { href: "/shoplist", label: "Shop" },
+  { href: "/mind-diet", label: "Mind" },
+];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+
+  function isActive(href) {
+    if (href === "/") return router.pathname === "/";
+    return router.pathname.startsWith(href);
+  }
 
   return (
-    <nav className="navbar">
+    <nav className="navbar" aria-label="Main">
       <div className="navbar-top">
-        <div className="navbar-logo">
+        <Link href="/" className="navbar-logo" onClick={() => setOpen(false)}>
           <div style={styles.logoMark}>M</div>
           <span style={styles.logoText}>Morgan</span>
-        </div>
+        </Link>
 
         <button
           type="button"
@@ -25,18 +39,16 @@ export default function Navbar() {
       </div>
 
       <div className={`navbar-links${open ? " open" : ""}`}>
-        <Link href="/" className="navbar-link" onClick={() => setOpen(false)}>
-          Plan
-        </Link>
-        <Link href="/meal-plan" className="navbar-link" onClick={() => setOpen(false)}>
-          Meals
-        </Link>
-        <Link href="/shoplist" className="navbar-link" onClick={() => setOpen(false)}>
-          Shop
-        </Link>
-        <Link href="/mind-diet" className="navbar-link" onClick={() => setOpen(false)}>
-          Mind
-        </Link>
+        {links.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className={`navbar-link${isActive(link.href) ? " active" : ""}`}
+            onClick={() => setOpen(false)}
+          >
+            {link.label}
+          </Link>
+        ))}
       </div>
     </nav>
   );
@@ -55,7 +67,6 @@ const styles = {
     boxShadow: "0 6px 16px rgba(14,165,233,0.4)",
     flexShrink: 0,
   },
-
   logoText: {
     color: "#f8fafc",
     fontSize: 18,
