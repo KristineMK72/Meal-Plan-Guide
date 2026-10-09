@@ -8,9 +8,10 @@ const links = [
   { href: "/meal-plan", label: "Meals" },
   { href: "/shoplist", label: "Shop" },
   { href: "/mind-diet", label: "Mind" },
+  { href: "/saved", label: "Saved" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ theme = "light", onToggleTheme, themeReady }) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
@@ -27,15 +28,29 @@ export default function Navbar() {
           <span style={styles.logoText}>Morgan</span>
         </Link>
 
-        <button
-          type="button"
-          className="navbar-toggle"
-          aria-label="Toggle navigation"
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? "✕" : "☰"}
-        </button>
+        <div style={styles.topActions}>
+          {themeReady ? (
+            <button
+              type="button"
+              className="theme-toggle"
+              onClick={onToggleTheme}
+              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+              title={theme === "dark" ? "Light mode" : "Dark mode"}
+            >
+              {theme === "dark" ? "☀️" : "🌙"}
+            </button>
+          ) : null}
+
+          <button
+            type="button"
+            className="navbar-toggle"
+            aria-label="Toggle navigation"
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? "✕" : "☰"}
+          </button>
+        </div>
       </div>
 
       <div className={`navbar-links${open ? " open" : ""}`}>
@@ -49,6 +64,14 @@ export default function Navbar() {
             {link.label}
           </Link>
         ))}
+        <button
+          type="button"
+          className="theme-toggle theme-toggle-desktop"
+          onClick={onToggleTheme}
+          aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+        >
+          {theme === "dark" ? "☀️ Light" : "🌙 Dark"}
+        </button>
       </div>
     </nav>
   );
@@ -72,5 +95,10 @@ const styles = {
     fontSize: 18,
     fontWeight: 700,
     letterSpacing: "0.02em",
+  },
+  topActions: {
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
   },
 };

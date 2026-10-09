@@ -1,124 +1,113 @@
-// /pages/meal-plan.js
-import React from 'react';
-import Link from 'next/link';
+import Link from "next/link";
+import AppShell from "../components/AppShell";
 
-const BREAKFAST_ICON_URL = "https://img.icons8.com/material-outlined/32/breakfast.png";
-const LUNCH_ICON_URL = "https://img.icons8.com/material-outlined/32/lunch.png";
-const DINNER_ICON_URL = "https://img.icons8.com/material-outlined/32/dinner.png";
+const days = [
+  {
+    day: "Day 1",
+    breakfast: "Greek yogurt + berries + chia",
+    lunch: "Grilled chicken salad",
+    dinner: "Salmon + asparagus + avocado",
+  },
+  {
+    day: "Day 2",
+    breakfast: "Spinach & feta omelet",
+    lunch: "Turkey lettuce wraps",
+    dinner: "Beef taco bowl (no tortilla)",
+  },
+  {
+    day: "Day 3",
+    breakfast: "Protein smoothie",
+    lunch: "Tuna salad bowl",
+    dinner: "Chicken thighs + green beans",
+  },
+  {
+    day: "Day 4",
+    breakfast: "Eggs + turkey sausage",
+    lunch: "Shrimp salad",
+    dinner: "Pork chops + broccoli",
+  },
+  {
+    day: "Day 5",
+    breakfast: "Greek yogurt + nuts",
+    lunch: "Chicken Caesar salad",
+    dinner: "Steak + mushrooms + salad",
+  },
+  {
+    day: "Day 6",
+    breakfast: "Eggs + cottage cheese",
+    lunch: "Egg salad lettuce wraps",
+    dinner: "Cod + Brussels sprouts",
+  },
+  {
+    day: "Day 7",
+    breakfast: "Protein pancakes",
+    lunch: "Leftover protein bowl",
+    dinner: "Turkey meatballs + zucchini noodles",
+  },
+];
 
 export default function MealPlan() {
-    const days = [
-        {
-            day: "Day 1",
-            breakfast: "Greek yogurt + berries + chia",
-            lunch: "Grilled chicken salad",
-            dinner: "Salmon + asparagus + avocado",
-        },
-        {
-            day: "Day 2",
-            breakfast: "Spinach & feta omelet",
-            lunch: "Turkey lettuce wraps",
-            dinner: "Beef taco bowl (no tortilla)",
-        },
-        {
-            day: "Day 3",
-            breakfast: "Protein smoothie",
-            lunch: "Tuna salad bowl",
-            dinner: "Chicken thighs + green beans",
-        },
-        {
-            day: "Day 4",
-            breakfast: "Eggs + turkey sausage",
-            lunch: "Shrimp salad",
-            dinner: "Pork chops + broccoli",
-        },
-        {
-            day: "Day 5",
-            breakfast: "Greek yogurt + nuts",
-            lunch: "Chicken Caesar salad",
-            dinner: "Steak + mushrooms + salad",
-        },
-        {
-            day: "Day 6",
-            breakfast: "Eggs + cottage cheese",
-            lunch: "Egg salad lettuce wraps",
-            dinner: "Cod + Brussels sprouts",
-        },
-        {
-            day: "Day 7",
-            breakfast: "Protein pancakes",
-            lunch: "Leftover protein bowl",
-            dinner: "Turkey meatballs + zucchini noodles",
-        },
-    ];
+  return (
+    <AppShell>
+      <section className="glass-dark animate-in" style={{ padding: 24, marginBottom: 24 }}>
+        <div className="page-eyebrow" style={{ color: "#7dd3fc" }}>
+          Sample week
+        </div>
+        <h1 className="hero-title-mobile" style={{ margin: "0 0 10px", color: "#f8fafc", fontSize: 36 }}>
+          7-Day High-Protein, Low-Carb Meal Plan
+        </h1>
+        <p style={{ margin: 0, color: "#cbd5e1", maxWidth: 640, lineHeight: 1.6 }}>
+          A ready-made week you can follow as-is or use as inspiration when you generate a custom
+          plan with Morgan.
+        </p>
+      </section>
 
-    return (
-        <main className="page-padding" style={{ maxWidth: "900px" }}>
-
-            <h1
-                style={{
-                    textAlign: "center",
-                    background: "#1845AD",
-                    color: "white",
-                    padding: "1.2rem",
-                    borderRadius: "12px",
-                    fontSize: "1.5rem",
-                    marginBottom: "2rem",
-                    lineHeight: 1.3,
-                }}
-            >
-                7-Day High-Protein, Low-Carb Meal Plan
-            </h1>
-
-            <div style={{ display: "grid", gap: "1.5rem" }}>
-                {days.map((d, index) => (
-                    <div
-                        key={index}
-                        style={{
-                            padding: "1.25rem",
-                            borderRadius: "10px",
-                            background: "#f8faff",
-                            borderLeft: "5px solid #1845AD",
-                        }}
-                    >
-                        <h2 style={{ color: "#1845AD", marginBottom: "1rem", fontSize: "1.25rem" }}>{d.day}</h2>
-
-                        <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", marginBottom: "0.5rem" }}>
-                            <img src={BREAKFAST_ICON_URL} width="32" height="32" alt="Breakfast" style={{ borderRadius: "50%", flexShrink: 0 }} />
-                            <p style={{ margin: 0 }}><strong>Breakfast:</strong> {d.breakfast}</p>
-                        </div>
-
-                        <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", marginBottom: "0.5rem" }}>
-                            <img src={LUNCH_ICON_URL} width="32" height="32" alt="Lunch" style={{ borderRadius: "50%", flexShrink: 0 }} />
-                            <p style={{ margin: 0 }}><strong>Lunch:</strong> {d.lunch}</p>
-                        </div>
-
-                        <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
-                            <img src={DINNER_ICON_URL} width="32" height="32" alt="Dinner" style={{ borderRadius: "50%", flexShrink: 0 }} />
-                            <p style={{ margin: 0 }}><strong>Dinner:</strong> {d.dinner}</p>
-                        </div>
-                    </div>
-                ))}
+      <div style={{ display: "grid", gap: 16 }}>
+        {days.map((d, index) => (
+          <article
+            key={d.day}
+            className="glass-panel animate-in day-card-enter"
+            style={{ animationDelay: `${index * 0.05}s` }}
+          >
+            <h2 style={{ margin: "0 0 14px", color: "var(--accent)", fontSize: "1.25rem" }}>
+              {d.day}
+            </h2>
+            <div className="meal-row">
+              <span className="meal-emoji" aria-hidden>
+                🌅
+              </span>
+              <p style={{ margin: 0 }}>
+                <strong>Breakfast:</strong> {d.breakfast}
+              </p>
             </div>
-
-            <div style={{ textAlign: "center", marginTop: "3rem" }}>
-                <Link
-                    href="/shoplist"
-                    style={{
-                        padding: "1rem 1.5rem",
-                        background: "#00b386",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "10px",
-                        cursor: "pointer",
-                        fontSize: "1.1rem",
-                        textDecoration: "none",
-                        display: "inline-block",
-                    }}
-                >
-                    View Full Weekly Shopping List 🛒
-                </Link>
+            <div className="meal-row">
+              <span className="meal-emoji" aria-hidden>
+                🥗
+              </span>
+              <p style={{ margin: 0 }}>
+                <strong>Lunch:</strong> {d.lunch}
+              </p>
             </div>
-        </main>
-    );
+            <div className="meal-row">
+              <span className="meal-emoji" aria-hidden>
+                🍽️
+              </span>
+              <p style={{ margin: 0 }}>
+                <strong>Dinner:</strong> {d.dinner}
+              </p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div style={{ textAlign: "center", marginTop: 32, display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "center" }}>
+        <Link href="/shoplist" className="action-btn action-btn-primary" style={{ textDecoration: "none" }}>
+          View shopping list 🛒
+        </Link>
+        <Link href="/" className="action-btn" style={{ textDecoration: "none" }}>
+          Build your own with Morgan
+        </Link>
+      </div>
+    </AppShell>
+  );
 }

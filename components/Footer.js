@@ -9,6 +9,7 @@ export default function Footer() {
         <Link href="/meal-plan">Meals</Link>
         <Link href="/shoplist">Shop</Link>
         <Link href="/mind-diet">Mind</Link>
+        <Link href="/saved">Saved</Link>
         <Link href="/sustainability">Sustainability</Link>
       </div>
       <p style={{ margin: "0 0 6px" }}>
