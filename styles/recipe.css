@@ -1,0 +1,151 @@
+/* Recipe cards + richer chat formatting */
+
+.chat-box {
+  max-height: 480px;
+}
+
+.chat-bubble-bot {
+  max-width: min(100%, 520px);
+}
+
+.chat-bubble.is-recipe {
+  max-width: min(100%, 560px);
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+.recipe-card {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--panel-bg);
+  overflow: hidden;
+  box-shadow: var(--panel-shadow);
+}
+
+.recipe-card-header {
+  padding: 14px 16px 12px;
+  background: linear-gradient(
+    135deg,
+    rgba(2, 132, 199, 0.12),
+    rgba(22, 163, 74, 0.1)
+  );
+  border-bottom: 1px solid var(--border);
+}
+
+.recipe-card-kicker {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.recipe-card-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.recipe-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.recipe-meta-pill {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-body);
+  background: var(--day-bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+
+.recipe-card-body {
+  padding: 14px 16px 16px;
+}
+
+.recipe-section {
+  margin-top: 14px;
+}
+
+.recipe-section:first-child {
+  margin-top: 0;
+}
+
+.recipe-section-title {
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.recipe-list {
+  margin: 0;
+  padding-left: 1.15rem;
+  color: var(--text-body);
+  line-height: 1.55;
+}
+
+.recipe-list li {
+  margin-bottom: 6px;
+}
+
+.recipe-steps {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: var(--text-body);
+  line-height: 1.55;
+}
+
+.recipe-steps li {
+  margin-bottom: 10px;
+  padding-left: 4px;
+}
+
+.recipe-note {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(14, 165, 233, 0.1);
+  color: var(--text-body);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.chat-rich {
+  white-space: pre-wrap;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.chat-rich p {
+  margin: 0 0 0.65em;
+}
+
+.chat-rich p:last-child {
+  margin-bottom: 0;
+}
+
+.chat-rich strong {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.chat-rich ul,
+.chat-rich ol {
+  margin: 0.4em 0 0.6em;
+  padding-left: 1.2rem;
+}
+
+.chat-rich li {
+  margin-bottom: 0.35em;
+}

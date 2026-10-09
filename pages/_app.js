@@ -4,6 +4,7 @@ import Head from "next/head";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../styles/global.css";
+import "../styles/recipe.css";
 
 function applyTheme(next) {
   if (typeof document === "undefined") return;
