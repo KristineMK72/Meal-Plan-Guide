@@ -59,8 +59,8 @@ function MyApp({ Component, pageProps }) {
           content="Build a doable week of meals with Morgan — plans, shopping lists, and coaching."
         />
         <meta property="og:image" content="https://meal-plan-guide.vercel.app/og-image.jpg" />
-        <meta property="og:image:width" content="784" />
-        <meta property="og:image:height" content="784" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Morgan, your meal plan coach" />
 
         {/* Twitter / X */}
