@@ -373,9 +373,9 @@ a:focus-visible {
 .chat-box {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  max-height: 360px;
-  overflow-y: auto;
+  gap: 12px;
+  max-height: none;
+  overflow: visible;
   padding: 8px 2px;
   margin-bottom: 12px;
 }
