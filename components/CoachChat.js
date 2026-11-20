@@ -6,6 +6,10 @@ const starters = [
   "Swap one dinner for something easier",
   "Give me a quick breakfast recipe",
   "Motivate me for the week",
+  "Give me a no-fuss weeknight meal",
+  "What can I do with what’s already in the fridge?",
+  "Make me something that takes less than 20 minutes",
+  "Give me a recipe that doesn’t dirty a lot of dishes",
 ];
 
 function escapeHtml(str) {

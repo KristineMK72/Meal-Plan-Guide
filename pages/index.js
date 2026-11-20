@@ -16,11 +16,18 @@ const presets = [
 ];
 
 const tips = [
-  "Repeating a few good meals is not boring. It is strategy in a nice outfit.",
-  "A perfect week is optional. A doable week is everything.",
-  "Shop your pantry first — your future self will thank you.",
-  "Prep once, eat twice. Leftovers are a love language.",
-  "Protein at breakfast makes the rest of the day easier.",
+  "You don’t need a perfect week. You need a week you can actually live through.",
+  "Shop the pantry first. Your future self will thank you.",
+  "A simple meal done well beats a fancy one you never make.",
+  "Protein at breakfast makes the rest of the day easier. That’s just how it is.",
+  "Leftovers are not a failure. They’re a strategy with good packaging.",
+  "If it takes more than three pans, we’re probably overthinking it.",
+  "The best diet is the one you’ll still be doing on Thursday.",
+  "You can have the salad. Or you can have the chicken and rice. Both count.",
+  "One decent meal is enough to turn the day around.",
+  "Start with what you have. We’ll figure out the rest.",
+  "Consistency beats intensity. Every time.",
+  "You’re allowed to make the easy version. That’s still cooking.",
 ];
 
 export default function Home() {
