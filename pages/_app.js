@@ -58,9 +58,9 @@ function MyApp({ Component, pageProps }) {
           property="og:description"
           content="Build a doable week of meals with Morgan — plans, shopping lists, and coaching."
         />
-        <meta property="og:image" content="https://meal-plan-guide.vercel.app/morgan-thumbnail.jpg" />
+        <meta property="og:image" content="https://meal-plan-guide.vercel.app/og-image.jpg" />
         <meta property="og:image:width" content="784" />
-        <meta property="og:image:height" content="1176" />
+        <meta property="og:image:height" content="784" />
         <meta property="og:image:alt" content="Morgan, your meal plan coach" />
 
         {/* Twitter / X */}
@@ -70,7 +70,7 @@ function MyApp({ Component, pageProps }) {
           name="twitter:description"
           content="Build a doable week of meals with Morgan — plans, shopping lists, and coaching."
         />
-        <meta name="twitter:image" content="https://meal-plan-guide.vercel.app/morgan-thumbnail.jpg" />
+        <meta name="twitter:image" content="https://meal-plan-guide.vercel.app/og-image.jpg" />
 
         {/* Favicon / home screen */}
         <link rel="icon" href="/morgan-thumbnail.jpg" />
