@@ -24,7 +24,7 @@ export default function Navbar({ theme = "light", onToggleTheme }) {
     <nav className="navbar" aria-label="Main">
       <div className="navbar-top">
         <Link href="/" className="navbar-logo" onClick={() => setOpen(false)}>
-          <div className="navbar-logo-mark">M</div>
+          <img src="/morgan-thumbnail.jpg" alt="Morgan" className="navbar-logo-mark" style={{objectFit:"cover",borderRadius:"50%"}} />
           <span className="navbar-logo-text">Morgan</span>
         </Link>
 

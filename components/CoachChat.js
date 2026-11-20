@@ -356,7 +356,7 @@ export default function CoachChat({ plan }) {
             Recipes, swaps, pantry ideas, grocery help, or a little motivation.
           </p>
         </div>
-        <div className="chat-avatar morgan-orb-live">M</div>
+        <img src="/morgan-thumbnail.jpg" alt="Morgan" className="chat-avatar morgan-orb-live" style={{objectFit:"cover",borderRadius:"50%"}} />
       </div>
 
       <div className="preset-wrap">

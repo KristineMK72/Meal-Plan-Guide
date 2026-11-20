@@ -182,9 +182,12 @@ export default function Home() {
         </div>
 
         <div style={styles.heroSide} className="glass-dark animate-in animate-in-delay-1">
-          <div style={styles.morganOrb} className="morgan-orb-live">
-            M
-          </div>
+          <img
+            src="/morgan-thumbnail.jpg"
+            alt="Morgan"
+            style={styles.morganOrb}
+            className="morgan-orb-live"
+          />
           <h2 style={styles.sideTitle} className="side-title-mobile">
             Meet Morgan
           </h2>
@@ -311,13 +314,9 @@ const styles = {
     width: 76,
     height: 76,
     borderRadius: "50%",
-    display: "grid",
-    placeItems: "center",
-    fontSize: 30,
-    fontWeight: 800,
-    color: "#ffffff",
-    background: "linear-gradient(135deg, #0ea5e9 0%, #22c55e 100%)",
+    objectFit: "cover",
     marginBottom: 18,
+    boxShadow: "0 18px 34px rgba(14,165,233,0.28)",
   },
   sideTitle: {
     margin: "0 0 10px 0",
